@@ -1,0 +1,28 @@
+# Core data processing
+pandas>=2.0.0
+numpy>=1.24.0
+tqdm>=4.65.0
+scikit-learn>=1.3.0
+
+# Generative models (TVAE + CTGAN via SDV)
+sdv>=1.9.0
+
+# TabDDPM: Clone separately
+# git clone https://github.com/rotot0/tab-ddpm
+# pip install -r tab-ddpm/requirements.txt
+
+# ML Evaluation
+lightgbm>=4.0.0
+scipy>=1.11.0
+
+# Differential Privacy
+opacus>=1.4.0
+torch>=2.0.0
+
+# Dashboard
+streamlit>=1.28.0
+plotly>=5.17.0
+
+# Plotting
+matplotlib>=3.7.0
+seaborn>=0.13.0
