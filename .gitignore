@@ -1,35 +1,7 @@
-# Python
 __pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-
-# Virtual environments
+*.pyc
+.env
 venv/
-env/
-.venv/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# OS
+saved_models/
+data/synthetic/
 .DS_Store
-Thumbs.db
-
-# Models (large binaries - train locally)
-*.pkl
-*.pt
-*.pth
-
-# IDE
-.vscode/
-.idea/
-
-# Logs
-*.log

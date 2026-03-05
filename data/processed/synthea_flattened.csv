@@ -342,7 +342,6 @@ male,Married,White,Not Hispanic or Latino,65.48,2.7856,174.8,84.2,27.56,64.0,114
 female,Never Married,White,Not Hispanic or Latino,86.69,2.0431,163.7,85.6,31.94,78.0,122.0,98.0,179.77,127.12,105.65,53.65,Never smoked tobacco (finding),25.0,1,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0
 female,Never Married,Black or African American,Not Hispanic or Latino,86.69,2.0431,162.7,80.1,30.26,78.0,105.0,96.0,137.38,100.14,51.93,65.42,Ex-smoker (finding),62.0,0,1,0,1,1,1,1,0,1,0,0,0,1,0,0,0,1,1,0,0
 female,Married,White,Not Hispanic or Latino,86.69,2.0431,154.6,67.3,28.16,85.0,127.0,86.0,179.93,129.4,97.71,56.33,Ex-smoker (finding),68.0,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0
-Unknown,Unknown,Unknown,Unknown,86.69,2.0431,167.7,78.55,27.845,,,78.0,179.77,127.12,105.65,53.65,Never smoked tobacco (finding),,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 female,Never Married,White,Not Hispanic or Latino,86.69,2.0431,170.6,80.5,27.66,63.0,116.0,64.0,179.77,127.12,105.65,53.65,Never smoked tobacco (finding),27.0,0,1,0,0,1,0,0,0,1,0,1,1,1,1,0,0,0,0,0,0
 male,Widowed,White,Not Hispanic or Latino,86.69,2.0431,184.9,100.9,29.5,91.0,147.0,63.0,139.97,120.03,66.39,49.57,Never smoked tobacco (finding),42.0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0
 male,Married,Asian,Not Hispanic or Latino,66.44,2.8926,177.7,87.2,27.61,75.0,107.0,69.0,167.59,146.13,96.08,42.28,Ex-smoker (finding),98.0,0,1,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
@@ -381,7 +380,6 @@ male,Divorced,White,Not Hispanic or Latino,86.69,2.0431,168.8,77.6,27.23,48.574,
 male,Never Married,Black or African American,Not Hispanic or Latino,110.68,2.0178,182.6,101.2,30.35,89.0,114.0,64.0,237.21,175.84,157.63,44.41,Ex-smoker (finding),58.0,1,1,0,1,1,0,1,1,0,0,1,1,0,0,0,0,1,1,0,1
 male,Never Married,White,Not Hispanic or Latino,86.69,2.0431,167.4,71.2,25.42,81.0,122.0,75.0,179.77,127.12,105.65,53.65,Never smoked tobacco (finding),15.0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 female,Divorced,White,Not Hispanic or Latino,86.69,2.0431,165.0,73.8,27.11,79.0,143.0,80.0,194.67,146.68,100.35,64.99,Never smoked tobacco (finding),59.0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
-Unknown,Unknown,Unknown,Unknown,86.69,2.0431,167.7,78.55,27.845,,,78.0,179.77,127.12,105.65,53.65,Never smoked tobacco (finding),,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 female,Married,Black or African American,Not Hispanic or Latino,86.69,2.0431,156.3,70.1,28.69,60.0,89.0,64.0,174.79,142.84,89.55,56.67,Never smoked tobacco (finding),67.0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,0
 male,Never Married,Other,Not Hispanic or Latino,86.69,2.0431,181.7,116.5,35.28,77.0,123.0,95.0,179.77,127.12,105.65,53.65,Ex-smoker (finding),19.0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 female,Never Married,White,Not Hispanic or Latino,86.69,2.0431,156.0,67.5,27.74,70.0,112.0,68.0,137.13,138.47,49.27,60.16,Never smoked tobacco (finding),72.0,1,1,1,1,1,0,1,0,0,0,1,1,1,0,0,0,1,1,0,0
