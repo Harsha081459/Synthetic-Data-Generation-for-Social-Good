@@ -1,0 +1,47 @@
+[
+    {
+        "epsilon": "1.0",
+        "tstr_accuracy": 0.7217,
+        "tstr_f1": 0.6051,
+        "utility_loss_gap": 0.2783,
+        "avg_dcr": 1.7687,
+        "exact_matches": 0,
+        "corr_mae": 0.1409
+    },
+    {
+        "epsilon": "2.0",
+        "tstr_accuracy": 0.7217,
+        "tstr_f1": 0.6051,
+        "utility_loss_gap": 0.2783,
+        "avg_dcr": 2.124,
+        "exact_matches": 0,
+        "corr_mae": 0.1239
+    },
+    {
+        "epsilon": "5.0",
+        "tstr_accuracy": 0.7783,
+        "tstr_f1": 0.7162,
+        "utility_loss_gap": 0.2217,
+        "avg_dcr": 2.2573,
+        "exact_matches": 0,
+        "corr_mae": 0.1262
+    },
+    {
+        "epsilon": "10.0",
+        "tstr_accuracy": 0.8062,
+        "tstr_f1": 0.7597,
+        "utility_loss_gap": 0.1938,
+        "avg_dcr": 2.234,
+        "exact_matches": 0,
+        "corr_mae": 0.127
+    },
+    {
+        "epsilon": "inf",
+        "tstr_accuracy": 0.895,
+        "tstr_f1": 0.8689,
+        "utility_loss_gap": 0.105,
+        "avg_dcr": 2.3886,
+        "exact_matches": 0,
+        "corr_mae": 0.1062
+    }
+]

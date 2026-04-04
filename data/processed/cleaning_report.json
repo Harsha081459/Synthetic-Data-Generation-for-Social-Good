@@ -1,0 +1,331 @@
+{
+  "datasets": {
+    "diabetes": {
+      "validation": {
+        "dataset": "diabetes",
+        "rows": 8134,
+        "columns": 34,
+        "nan_count": 0,
+        "duplicate_rows": 87,
+        "target_col": "Diabetes_Target",
+        "target_present": true,
+        "checks_passed": false,
+        "issues": [
+          "Exact duplicate rows remain"
+        ],
+        "numeric_ranges": {
+          "Age": {
+            "min": 5.0,
+            "max": 96.0
+          },
+          "Sex": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "FBS_mg_dL": {
+            "min": 70.9197922660478,
+            "max": 381.0
+          },
+          "PPBS_mg_dL": {
+            "min": 70.13740844652804,
+            "max": 495.02000000000044
+          },
+          "HbA1c_percent": {
+            "min": -52.063237480720936,
+            "max": 387.9515000000004
+          },
+          "BMI": {
+            "min": 15.724145329522841,
+            "max": 42.16161561679994
+          },
+          "Weight_kg": {
+            "min": 37.576,
+            "max": 110.41199999999999
+          },
+          "Height_cm": {
+            "min": 136.5108976714319,
+            "max": 181.0
+          },
+          "BP_Systolic_mmHg": {
+            "min": 61.0,
+            "max": 171.0
+          },
+          "Pulse_bpm": {
+            "min": 68.0,
+            "max": 113.9399999999996
+          },
+          "Total_Cholesterol_mg_dL": {
+            "min": 89.97,
+            "max": 668.0
+          },
+          "HDL_Cholesterol_mg_dL": {
+            "min": -4.600854471799847,
+            "max": 181.71999999999935
+          },
+          "LDL_Cholesterol_mg_dL": {
+            "min": 8.6,
+            "max": 189.2
+          },
+          "Triglycerides_mg_dL": {
+            "min": 48.0,
+            "max": 1030.1400000000094
+          },
+          "Serum_Creatinine_mg_dL": {
+            "min": -11.491421292820394,
+            "max": 149.47488421409432
+          },
+          "TSH_uIU_mL": {
+            "min": -5.214112970963407,
+            "max": 87.4
+          },
+          "Diabetes_Target": {
+            "min": 0.0,
+            "max": 2.0
+          },
+          "Serum_Creatinine_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "TSH_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "TotalChol_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Triglycerides_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "HDL_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "LDL_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "HbA1c_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "PPBS_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "FBS_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Pulse_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "BP_Systolic_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "BMI_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Height_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Comorbidity_Documented": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Has_Hypertension": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "Has_Hypothyroidism": {
+            "min": 0.0,
+            "max": 1.0
+          }
+        },
+        "target_distribution": {
+          "2": 0.7242,
+          "0": 0.2175,
+          "1": 0.0583
+        },
+        "raw_rows": 16353,
+        "duplicates_removed": 8219,
+        "missingness_flags": [
+          "Serum_Creatinine_is_missing",
+          "TSH_is_missing",
+          "TotalChol_is_missing",
+          "Triglycerides_is_missing",
+          "HDL_is_missing",
+          "LDL_is_missing",
+          "HbA1c_is_missing",
+          "PPBS_is_missing",
+          "FBS_is_missing",
+          "Pulse_is_missing",
+          "BP_Systolic_is_missing",
+          "BMI_is_missing",
+          "Height_is_missing"
+        ],
+        "output_columns": [
+          "Age",
+          "Sex",
+          "FBS_mg_dL",
+          "PPBS_mg_dL",
+          "HbA1c_percent",
+          "BMI",
+          "Weight_kg",
+          "Height_cm",
+          "BP_Systolic_mmHg",
+          "Pulse_bpm",
+          "Total_Cholesterol_mg_dL",
+          "HDL_Cholesterol_mg_dL",
+          "LDL_Cholesterol_mg_dL",
+          "Triglycerides_mg_dL",
+          "Serum_Creatinine_mg_dL",
+          "TSH_uIU_mL",
+          "Diabetes_Status",
+          "Diabetes_Target",
+          "Serum_Creatinine_is_missing",
+          "TSH_is_missing",
+          "TotalChol_is_missing",
+          "Triglycerides_is_missing",
+          "HDL_is_missing",
+          "LDL_is_missing",
+          "HbA1c_is_missing",
+          "PPBS_is_missing",
+          "FBS_is_missing",
+          "Pulse_is_missing",
+          "BP_Systolic_is_missing",
+          "BMI_is_missing",
+          "Height_is_missing",
+          "Comorbidity_Documented",
+          "Has_Hypertension",
+          "Has_Hypothyroidism"
+        ]
+      },
+      "outputs": [
+        "D:\\Cursor_folder\\DATAPORT HACKATHON\\data\\processed\\diabetes_generative_clean.csv",
+        "D:\\Cursor_folder\\DATAPORT HACKATHON\\data\\processed\\diabetes_clean.csv",
+        "D:\\Cursor_folder\\DATAPORT HACKATHON\\data\\processed\\diabetes_mcdd_clean.csv"
+      ]
+    },
+    "framingham": {
+      "validation": {
+        "dataset": "framingham",
+        "rows": 4240,
+        "columns": 17,
+        "nan_count": 0,
+        "duplicate_rows": 0,
+        "target_col": "TenYearCHD",
+        "target_present": true,
+        "checks_passed": true,
+        "issues": [],
+        "numeric_ranges": {
+          "male": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "age": {
+            "min": 32.0,
+            "max": 70.0
+          },
+          "education": {
+            "min": 1.0,
+            "max": 4.0
+          },
+          "currentSmoker": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "cigsPerDay": {
+            "min": 0.0,
+            "max": 70.0
+          },
+          "BPMeds": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "prevalentStroke": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "prevalentHyp": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "diabetes": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "totChol": {
+            "min": 153.0,
+            "max": 354.1099999999997
+          },
+          "sysBP": {
+            "min": 97.0,
+            "max": 200.0
+          },
+          "diaBP": {
+            "min": 60.0,
+            "max": 118.0
+          },
+          "BMI": {
+            "min": 18.164,
+            "max": 38.956
+          },
+          "heartRate": {
+            "min": 52.0,
+            "max": 110.0
+          },
+          "glucose": {
+            "min": 55.0,
+            "max": 174.95999999999913
+          },
+          "TenYearCHD": {
+            "min": 0.0,
+            "max": 1.0
+          },
+          "glucose_is_missing": {
+            "min": 0.0,
+            "max": 1.0
+          }
+        },
+        "target_distribution": {
+          "0": 0.8481,
+          "1": 0.1519
+        },
+        "raw_rows": 4240,
+        "duplicates_removed": 0,
+        "missingness_flags": [
+          "glucose_is_missing"
+        ],
+        "output_columns": [
+          "male",
+          "age",
+          "education",
+          "currentSmoker",
+          "cigsPerDay",
+          "BPMeds",
+          "prevalentStroke",
+          "prevalentHyp",
+          "diabetes",
+          "totChol",
+          "sysBP",
+          "diaBP",
+          "BMI",
+          "heartRate",
+          "glucose",
+          "TenYearCHD",
+          "glucose_is_missing"
+        ]
+      },
+      "outputs": [
+        "D:\\Cursor_folder\\DATAPORT HACKATHON\\data\\processed\\framingham_generative_clean.csv",
+        "D:\\Cursor_folder\\DATAPORT HACKATHON\\data\\processed\\framingham_clean.csv"
+      ]
+    }
+  }
+}
