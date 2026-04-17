@@ -191,10 +191,12 @@ def main():
 
     # 5. Generate Data
     logger.info(f"Generating {num_rows} synthetic rows...")
-    model.eval()
+    # Opacus wraps model in GradSampleModule; unwrap to access .decode()
+    raw_model = model._module if hasattr(model, '_module') else model
+    raw_model.eval()
     with torch.no_grad():
         z = torch.randn(num_rows, 128).to(device)
-        synth_tensor = model.decode(z).cpu().numpy()
+        synth_tensor = raw_model.decode(z).cpu().numpy()
         
     synth_df = preprocessor.inverse_transform(synth_tensor)
     

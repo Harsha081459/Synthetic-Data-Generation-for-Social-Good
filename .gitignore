@@ -1,7 +1,71 @@
-__pycache__/
-*.pyc
+# ===========================================
+# SynthoGen AI — .gitignore
+# ===========================================
+
+# ----------- Environment & Secrets ----------
 .env
+*.env.*
+
+# ----------- Python Cache ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ----------- Virtual Environments ----------
 venv/
-saved_models/
-data/synthetic/
+.venv/
+env/
+
+# ----------- IDE ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+Thumbs.db
+
+# ----------- Jupyter ----------
+.ipynb_checkpoints/
+
+# ----------- Logs ----------
+*.log
+streamlit.log
+training.log
+
+# ----------- Temp / Build ----------
+*.zip
+*.tar.gz
+dist/
+build/
+*.egg-info/
+
+# ----------- Local Dev Files (not needed on cloud) ----------
+server_app.py
+server_app_new.py
+server_temp/
+diff_output.txt
+ablation_progress.txt
+ppt slides/
+ppt_slides.zip
+github_repo/
+
+# ----------- Raw Source Data (too large) ----------
+*.xlsx
+Diabetes_MCDD.csv
+SyntheticEHR.zip
+SyntheticEHR_extracted/
+
+# ----------- Utility Scripts (not needed for deployment) ----------
+deploy_to_gpu.py
+upload_updates.py
+download_*.py
+check_*.py
+fix_cuda.py
+launch_ablation.py
+relaunch_ablation.py
+final_sync.py
+verify_and_deploy.py
+profile_datasets.py
+run_all_evals.py
