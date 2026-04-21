@@ -205,10 +205,12 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
 
 ## 👥 Team
 
-| Name | Role |
-|------|------|
-| **Harsha Vardhan Reddy** | Lead Developer & ML Engineer |
-| **Lokesh Pasumarthi** | Co-Developer & Data Engineer |
+| Name | 
+|------|
+| **Harsha Vardhan D** |
+| **Lohith P** |
+| **Anish Reddy** |
+| **Vishal Sriram K** |
 
 ---
 
@@ -225,7 +227,7 @@ If you use our synthetic datasets or methodology, please cite:
 ```bibtex
 @misc{synthogen_ai_2026,
   title   = {Provably Private Synthetic EHR Cohorts via Latent Diffusion (TabSyn)},
-  author  = {Reddy, Harsha Vardhan and Pasumarthi, Lokesh},
+  author  = {Harsha Vardhan D and Lohith P and Anish Reddy and Vishal Sriram K},
   year    = {2026},
   doi     = {10.21227/64c7-vj34},
   url     = {https://ieee-dataport.org/documents/provably-private-synthetic-ehr-cohorts-latent-diffusion-tabsyn},
