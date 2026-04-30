@@ -15,18 +15,21 @@ graph TD
         B --> C1[TVAE]
         B --> C2[CTGAN]
         B --> C3[TabDDPM Diffusion]
+        B --> C4[TabSyn Latent Diffusion]
     end
 
     subgraph 3. Differential Privacy Layer
         DP[DP-SGD Optimizer / Opacus] -.->|Epsilon Budget Injection| C1
         DP -.->|Epsilon Budget Injection| C2
         DP -.->|Epsilon Budget Injection| C3
+        DP -.->|Epsilon Budget Injection| C4
     end
 
     subgraph 4. Evaluation Suite
         C1 --> E1
         C2 --> E1
         C3 --> E1
+        C4 --> E1
         E1[SDMetrics Utility Scores]
         E1 --> E2[ML Efficacy: XGBoost]
         E1 --> E3[Anonymeter Attack Simulation]

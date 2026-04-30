@@ -167,7 +167,7 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
         try:
             stat, _ = ks_2samp(num_r[col].dropna(), num_s[col].dropna())
             ks_stats.append(stat)
-        except:
+        except (ValueError, TypeError):
             pass
     if ks_stats:
         report["fidelity_column_shapes"] = {
@@ -226,7 +226,8 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
 
 
 if __name__ == "__main__":
-    os.chdir(os.path.expanduser("~/DATAPORT_HACKATHON"))
+    # Set working directory to the repository root (parent of eval/)
+    os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
     EVALS = [
         ("tvae",    "data/processed/diabetes_mcdd_clean.csv", "data/synthetic/tvae_diabetes.csv",    "Diabetes_Target"),
