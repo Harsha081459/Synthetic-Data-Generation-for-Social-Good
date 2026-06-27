@@ -1,0 +1,10 @@
+{
+    "real_trained_overall_acc": 0.9783,
+    "real_trained_overall_f1": 0.9782,
+    "real_trained_minority_f1": 0.8783,
+    "synth_balanced_overall_acc": 0.8795,
+    "synth_balanced_overall_f1": 0.8795,
+    "synth_balanced_minority_f1": 0.4327,
+    "minority_class": "1",
+    "fairness_gain": -0.4456
+}

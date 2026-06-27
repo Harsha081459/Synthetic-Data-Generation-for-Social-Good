@@ -1,0 +1,133 @@
+{
+    "dataset_real": "data/processed/framingham_clean.csv",
+    "dataset_synth": "data/synthetic/tabddpm_framingham.csv",
+    "target": "TenYearCHD",
+    "utility": {
+        "baseline_accuracy": 0.8243,
+        "baseline_f1": 0.7831,
+        "tstr_accuracy": 0.8432,
+        "tstr_f1": 0.78,
+        "utility_loss_gap": -0.0189
+    },
+    "privacy_dcr": {
+        "avg_dcr": 1.9716,
+        "median_dcr": 1.5247,
+        "min_dcr": 0.4996,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "privacy_k_anonymity": {
+        "k_min": 1,
+        "k_median": 6,
+        "k_mean": 8.74,
+        "pct_records_k_leq_5": 17.26,
+        "distribution": {
+            "1-5": 217,
+            "6-10": 109,
+            "11-20": 135,
+            "21-50": 22,
+            "51+": 2
+        }
+    },
+    "privacy_reidentification": {
+        "avg_risk_score": 0.2161,
+        "max_risk_score": 0.6067,
+        "high_risk_count": 20,
+        "high_risk_percent": 1.0
+    },
+    "fidelity_correlation": {
+        "corr_matrix_mae": 0.0479
+    },
+    "fidelity_column_shapes": {
+        "avg_ks_statistic": 0.2498,
+        "columns_passed_pct": 0.0,
+        "per_column": {
+            "male": {
+                "ks_statistic": 0.2488,
+                "p_value": 0.0
+            },
+            "age": {
+                "ks_statistic": 0.0488,
+                "p_value": 0.0001
+            },
+            "education": {
+                "ks_statistic": 0.196,
+                "p_value": 0.0
+            },
+            "currentSmoker": {
+                "ks_statistic": 0.2101,
+                "p_value": 0.0
+            },
+            "cigsPerDay": {
+                "ks_statistic": 0.3038,
+                "p_value": 0.0
+            },
+            "BPMeds": {
+                "ks_statistic": 0.4382,
+                "p_value": 0.0
+            },
+            "prevalentStroke": {
+                "ks_statistic": 0.5788,
+                "p_value": 0.0
+            },
+            "prevalentHyp": {
+                "ks_statistic": 0.1976,
+                "p_value": 0.0
+            },
+            "diabetes": {
+                "ks_statistic": 0.6722,
+                "p_value": 0.0
+            },
+            "totChol": {
+                "ks_statistic": 0.054,
+                "p_value": 0.0
+            },
+            "sysBP": {
+                "ks_statistic": 0.0613,
+                "p_value": 0.0
+            },
+            "diaBP": {
+                "ks_statistic": 0.0663,
+                "p_value": 0.0
+            },
+            "BMI": {
+                "ks_statistic": 0.0436,
+                "p_value": 0.0006
+            },
+            "heartRate": {
+                "ks_statistic": 0.0998,
+                "p_value": 0.0
+            },
+            "glucose": {
+                "ks_statistic": 0.0733,
+                "p_value": 0.0
+            },
+            "TenYearCHD": {
+                "ks_statistic": 0.3611,
+                "p_value": 0.0
+            },
+            "glucose_is_missing": {
+                "ks_statistic": 0.5932,
+                "p_value": 0.0
+            }
+        }
+    },
+    "fidelity_pairwise_trends": {
+        "trend_accuracy_pct": 83.8,
+        "pairs_matched": 114,
+        "pairs_total": 136
+    },
+    "fidelity_class_distribution": {
+        "jensen_shannon_divergence": 0.0123,
+        "per_class": {
+            "0": {
+                "real_pct": 84.81,
+                "synth_pct": 83.54
+            },
+            "1": {
+                "real_pct": 15.19,
+                "synth_pct": 16.46
+            }
+        }
+    }
+}

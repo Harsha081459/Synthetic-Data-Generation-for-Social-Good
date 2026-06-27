@@ -1,0 +1,205 @@
+{
+    "dataset_real": "data/processed/diabetes_mcdd_clean.csv",
+    "dataset_synth": "data/synthetic/dp_tvae_epsinf.csv",
+    "target": "Diabetes_Target",
+    "utility": {
+        "baseline_accuracy": 1.0,
+        "baseline_f1": 1.0,
+        "tstr_accuracy": 0.895,
+        "tstr_f1": 0.8689,
+        "utility_loss_gap": 0.105
+    },
+    "privacy_dcr": {
+        "avg_dcr": 2.3886,
+        "median_dcr": 2.3159,
+        "min_dcr": 0.7645,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "privacy_k_anonymity": {
+        "k_min": 1,
+        "k_median": 38,
+        "k_mean": 54.01,
+        "pct_records_k_leq_5": 1.19,
+        "distribution": {
+            "1-5": 33,
+            "6-10": 11,
+            "11-20": 20,
+            "21-50": 16,
+            "51+": 69
+        }
+    },
+    "privacy_reidentification": {
+        "avg_risk_score": 0.1165,
+        "max_risk_score": 0.4656,
+        "high_risk_count": 0,
+        "high_risk_percent": 0.0
+    },
+    "fidelity_correlation": {
+        "corr_matrix_mae": 0.1062
+    },
+    "fidelity_column_shapes": {
+        "avg_ks_statistic": 0.2264,
+        "columns_passed_pct": 0.0,
+        "per_column": {
+            "Age": {
+                "ks_statistic": 0.3887,
+                "p_value": 0.0
+            },
+            "Sex": {
+                "ks_statistic": 0.1195,
+                "p_value": 0.0
+            },
+            "FBS_mg_dL": {
+                "ks_statistic": 0.2935,
+                "p_value": 0.0
+            },
+            "PPBS_mg_dL": {
+                "ks_statistic": 0.273,
+                "p_value": 0.0
+            },
+            "HbA1c_percent": {
+                "ks_statistic": 0.252,
+                "p_value": 0.0
+            },
+            "BMI": {
+                "ks_statistic": 0.379,
+                "p_value": 0.0
+            },
+            "Weight_kg": {
+                "ks_statistic": 0.3939,
+                "p_value": 0.0
+            },
+            "Height_cm": {
+                "ks_statistic": 0.337,
+                "p_value": 0.0
+            },
+            "BP_Systolic_mmHg": {
+                "ks_statistic": 0.4077,
+                "p_value": 0.0
+            },
+            "Pulse_bpm": {
+                "ks_statistic": 0.2457,
+                "p_value": 0.0
+            },
+            "Total_Cholesterol_mg_dL": {
+                "ks_statistic": 0.3657,
+                "p_value": 0.0
+            },
+            "HDL_Cholesterol_mg_dL": {
+                "ks_statistic": 0.4286,
+                "p_value": 0.0
+            },
+            "LDL_Cholesterol_mg_dL": {
+                "ks_statistic": 0.3878,
+                "p_value": 0.0
+            },
+            "Triglycerides_mg_dL": {
+                "ks_statistic": 0.3409,
+                "p_value": 0.0
+            },
+            "Serum_Creatinine_mg_dL": {
+                "ks_statistic": 0.4003,
+                "p_value": 0.0
+            },
+            "TSH_uIU_mL": {
+                "ks_statistic": 0.3588,
+                "p_value": 0.0
+            },
+            "Diabetes_Status": {
+                "ks_statistic": 0.3457,
+                "p_value": 0.0
+            },
+            "Diabetes_Target": {
+                "ks_statistic": 0.1747,
+                "p_value": 0.0
+            },
+            "Serum_Creatinine_is_missing": {
+                "ks_statistic": 0.1572,
+                "p_value": 0.0
+            },
+            "TSH_is_missing": {
+                "ks_statistic": 0.1859,
+                "p_value": 0.0
+            },
+            "TotalChol_is_missing": {
+                "ks_statistic": 0.1084,
+                "p_value": 0.0
+            },
+            "Triglycerides_is_missing": {
+                "ks_statistic": 0.1071,
+                "p_value": 0.0
+            },
+            "HDL_is_missing": {
+                "ks_statistic": 0.1014,
+                "p_value": 0.0
+            },
+            "LDL_is_missing": {
+                "ks_statistic": 0.1004,
+                "p_value": 0.0
+            },
+            "HbA1c_is_missing": {
+                "ks_statistic": 0.1194,
+                "p_value": 0.0
+            },
+            "PPBS_is_missing": {
+                "ks_statistic": 0.1511,
+                "p_value": 0.0
+            },
+            "FBS_is_missing": {
+                "ks_statistic": 0.1647,
+                "p_value": 0.0
+            },
+            "Pulse_is_missing": {
+                "ks_statistic": 0.1023,
+                "p_value": 0.0
+            },
+            "BP_Systolic_is_missing": {
+                "ks_statistic": 0.1066,
+                "p_value": 0.0
+            },
+            "BMI_is_missing": {
+                "ks_statistic": 0.0938,
+                "p_value": 0.0
+            },
+            "Height_is_missing": {
+                "ks_statistic": 0.0885,
+                "p_value": 0.0
+            },
+            "Comorbidity_Documented": {
+                "ks_statistic": 0.0936,
+                "p_value": 0.0
+            },
+            "Has_Hypertension": {
+                "ks_statistic": 0.0841,
+                "p_value": 0.0
+            },
+            "Has_Hypothyroidism": {
+                "ks_statistic": 0.0404,
+                "p_value": 0.0
+            }
+        }
+    },
+    "fidelity_pairwise_trends": {
+        "trend_accuracy_pct": 75.0,
+        "pairs_matched": 421,
+        "pairs_total": 561
+    },
+    "fidelity_class_distribution": {
+        "jensen_shannon_divergence": 0.1622,
+        "per_class": {
+            "0": {
+                "real_pct": 21.96,
+                "synth_pct": 9.05
+            },
+            "1": {
+                "real_pct": 5.89,
+                "synth_pct": 1.34
+            },
+            "2": {
+                "real_pct": 72.15,
+                "synth_pct": 89.61
+            }
+        }
+    }
+}

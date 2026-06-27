@@ -1,0 +1,149 @@
+{
+    "dataset_real": "data/processed/diabetes_mcdd_clean.csv",
+    "dataset_synth": "data/synthetic/tvae_diabetes.csv",
+    "target": "Diabetes_Target",
+    "utility": {
+        "baseline_accuracy": 0.9783,
+        "baseline_f1": 0.9782,
+        "tstr_accuracy": 0.8857,
+        "tstr_f1": 0.8707,
+        "utility_loss_gap": 0.0925
+    },
+    "privacy_dcr": {
+        "avg_dcr": 2.2603,
+        "median_dcr": 2.0996,
+        "min_dcr": 0.72,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "privacy_k_anonymity": {
+        "k_min": 1,
+        "k_median": 43,
+        "k_mean": 41.71,
+        "pct_records_k_leq_5": 1.39,
+        "distribution": {
+            "1-5": 41,
+            "6-10": 22,
+            "11-20": 24,
+            "21-50": 12,
+            "51+": 96
+        }
+    },
+    "privacy_reidentification": {
+        "avg_risk_score": 0.1277,
+        "max_risk_score": 0.4868,
+        "high_risk_count": 0,
+        "high_risk_percent": 0.0
+    },
+    "fidelity_correlation": {
+        "corr_matrix_mae": 0.0527
+    },
+    "fidelity_column_shapes": {
+        "avg_ks_statistic": 0.1077,
+        "columns_passed_pct": 10.0,
+        "per_column": {
+            "Age": {
+                "ks_statistic": 0.1571,
+                "p_value": 0.0
+            },
+            "Sex": {
+                "ks_statistic": 0.109,
+                "p_value": 0.0
+            },
+            "FBS_mg_dL": {
+                "ks_statistic": 0.0594,
+                "p_value": 0.0
+            },
+            "PPBS_mg_dL": {
+                "ks_statistic": 0.0652,
+                "p_value": 0.0
+            },
+            "HbA1c_percent": {
+                "ks_statistic": 0.1442,
+                "p_value": 0.0
+            },
+            "BMI": {
+                "ks_statistic": 0.0679,
+                "p_value": 0.0
+            },
+            "Weight_kg": {
+                "ks_statistic": 0.0576,
+                "p_value": 0.0
+            },
+            "Height_cm": {
+                "ks_statistic": 0.0561,
+                "p_value": 0.0
+            },
+            "BP_Systolic_mmHg": {
+                "ks_statistic": 0.1137,
+                "p_value": 0.0
+            },
+            "Pulse_bpm": {
+                "ks_statistic": 0.3726,
+                "p_value": 0.0
+            },
+            "Total_Cholesterol_mg_dL": {
+                "ks_statistic": 0.1607,
+                "p_value": 0.0
+            },
+            "HDL_Cholesterol_mg_dL": {
+                "ks_statistic": 0.2523,
+                "p_value": 0.0
+            },
+            "LDL_Cholesterol_mg_dL": {
+                "ks_statistic": 0.1484,
+                "p_value": 0.0
+            },
+            "Triglycerides_mg_dL": {
+                "ks_statistic": 0.0873,
+                "p_value": 0.0
+            },
+            "Serum_Creatinine_mg_dL": {
+                "ks_statistic": 0.0888,
+                "p_value": 0.0
+            },
+            "TSH_uIU_mL": {
+                "ks_statistic": 0.1371,
+                "p_value": 0.0
+            },
+            "Diabetes_Target": {
+                "ks_statistic": 0.0291,
+                "p_value": 0.002
+            },
+            "BMI_is_missing": {
+                "ks_statistic": 0.0386,
+                "p_value": 0.0
+            },
+            "Has_Hypertension": {
+                "ks_statistic": 0.0039,
+                "p_value": 1.0
+            },
+            "Has_Hypothyroidism": {
+                "ks_statistic": 0.0056,
+                "p_value": 0.9995
+            }
+        }
+    },
+    "fidelity_pairwise_trends": {
+        "trend_accuracy_pct": 80.5,
+        "pairs_matched": 153,
+        "pairs_total": 190
+    },
+    "fidelity_class_distribution": {
+        "jensen_shannon_divergence": 0.0352,
+        "per_class": {
+            "0": {
+                "real_pct": 21.96,
+                "synth_pct": 19.04
+            },
+            "1": {
+                "real_pct": 5.89,
+                "synth_pct": 7.86
+            },
+            "2": {
+                "real_pct": 72.15,
+                "synth_pct": 73.1
+            }
+        }
+    }
+}

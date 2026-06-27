@@ -1,0 +1,106 @@
+2026-06-27 12:58:37,167 | INFO    | 
+============================================================
+2026-06-27 12:58:37,167 | INFO    | Training DP-TVAE with epsilon = 1.0
+2026-06-27 12:58:37,167 | INFO    | ============================================================
+2026-06-27 12:58:37,167 | INFO    | Running: /home/user35/miniconda3/envs/synthogen/bin/python models/dp_tvae.py --dataset diabetes --input data/processed/diabetes_mcdd_clean.csv --output data/synthetic/dp_tvae_eps1.0.csv --epsilon 1.0 --epochs 50
+2026-06-27 12:58:46,078 | ERROR   | Training failed for epsilon=1.0: /home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/privacy_engine.py:98: UserWarning: Secure RNG turned off. This is perfectly fine for experimentation as it allows for much faster training performance, but remember to turn it on and retrain one last time before production with ``secure_mode`` turned on.
+  warnings.warn(
+/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/accountants/analysis/rdp.py:332: UserWarning: Optimal order is the largest alpha. Please consider expanding the range of alphas to get a tighter privacy bound.
+  warnings.warn(
+sys:1: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Traceback (most recent call last):
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 206, in <module>
+    main()
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 197, in main
+    synth_tensor = model.decode(z).cpu().numpy()
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 178, in __getattr__
+    raise e
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 173, in __getattr__
+    return super().__getattr__(item)
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1968, in __getattr__
+    raise AttributeError(
+AttributeError: 'GradSampleModule' object has no attribute 'decode'
+
+2026-06-27 12:58:46,078 | INFO    | 
+============================================================
+2026-06-27 12:58:46,078 | INFO    | Training DP-TVAE with epsilon = 2.0
+2026-06-27 12:58:46,078 | INFO    | ============================================================
+2026-06-27 12:58:46,078 | INFO    | Running: /home/user35/miniconda3/envs/synthogen/bin/python models/dp_tvae.py --dataset diabetes --input data/processed/diabetes_mcdd_clean.csv --output data/synthetic/dp_tvae_eps2.0.csv --epsilon 2.0 --epochs 50
+2026-06-27 12:58:55,095 | ERROR   | Training failed for epsilon=2.0: /home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/privacy_engine.py:98: UserWarning: Secure RNG turned off. This is perfectly fine for experimentation as it allows for much faster training performance, but remember to turn it on and retrain one last time before production with ``secure_mode`` turned on.
+  warnings.warn(
+/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/accountants/analysis/rdp.py:332: UserWarning: Optimal order is the largest alpha. Please consider expanding the range of alphas to get a tighter privacy bound.
+  warnings.warn(
+sys:1: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Traceback (most recent call last):
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 206, in <module>
+    main()
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 197, in main
+    synth_tensor = model.decode(z).cpu().numpy()
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 178, in __getattr__
+    raise e
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 173, in __getattr__
+    return super().__getattr__(item)
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1968, in __getattr__
+    raise AttributeError(
+AttributeError: 'GradSampleModule' object has no attribute 'decode'
+
+2026-06-27 12:58:55,095 | INFO    | 
+============================================================
+2026-06-27 12:58:55,095 | INFO    | Training DP-TVAE with epsilon = 5.0
+2026-06-27 12:58:55,095 | INFO    | ============================================================
+2026-06-27 12:58:55,095 | INFO    | Running: /home/user35/miniconda3/envs/synthogen/bin/python models/dp_tvae.py --dataset diabetes --input data/processed/diabetes_mcdd_clean.csv --output data/synthetic/dp_tvae_eps5.0.csv --epsilon 5.0 --epochs 50
+2026-06-27 12:59:04,636 | ERROR   | Training failed for epsilon=5.0: /home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/privacy_engine.py:98: UserWarning: Secure RNG turned off. This is perfectly fine for experimentation as it allows for much faster training performance, but remember to turn it on and retrain one last time before production with ``secure_mode`` turned on.
+  warnings.warn(
+/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/accountants/analysis/rdp.py:332: UserWarning: Optimal order is the largest alpha. Please consider expanding the range of alphas to get a tighter privacy bound.
+  warnings.warn(
+sys:1: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Traceback (most recent call last):
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 206, in <module>
+    main()
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 197, in main
+    synth_tensor = model.decode(z).cpu().numpy()
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 178, in __getattr__
+    raise e
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 173, in __getattr__
+    return super().__getattr__(item)
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1968, in __getattr__
+    raise AttributeError(
+AttributeError: 'GradSampleModule' object has no attribute 'decode'
+
+2026-06-27 12:59:04,636 | INFO    | 
+============================================================
+2026-06-27 12:59:04,636 | INFO    | Training DP-TVAE with epsilon = 10.0
+2026-06-27 12:59:04,637 | INFO    | ============================================================
+2026-06-27 12:59:04,637 | INFO    | Running: /home/user35/miniconda3/envs/synthogen/bin/python models/dp_tvae.py --dataset diabetes --input data/processed/diabetes_mcdd_clean.csv --output data/synthetic/dp_tvae_eps10.0.csv --epsilon 10.0 --epochs 50
+2026-06-27 12:59:15,699 | ERROR   | Training failed for epsilon=10.0: /home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/privacy_engine.py:98: UserWarning: Secure RNG turned off. This is perfectly fine for experimentation as it allows for much faster training performance, but remember to turn it on and retrain one last time before production with ``secure_mode`` turned on.
+  warnings.warn(
+/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/accountants/analysis/rdp.py:332: UserWarning: Optimal order is the largest alpha. Please consider expanding the range of alphas to get a tighter privacy bound.
+  warnings.warn(
+sys:1: UserWarning: Full backward hook is firing when gradients are computed with respect to module outputs since no inputs require gradients. See https://docs.pytorch.org/docs/main/generated/torch.nn.Module.html#torch.nn.Module.register_full_backward_hook for more details.
+Traceback (most recent call last):
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 206, in <module>
+    main()
+  File "/home/user35/DATAPORT_HACKATHON/models/dp_tvae.py", line 197, in main
+    synth_tensor = model.decode(z).cpu().numpy()
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 178, in __getattr__
+    raise e
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/opacus/grad_sample/gsm_base.py", line 173, in __getattr__
+    return super().__getattr__(item)
+  File "/home/user35/miniconda3/envs/synthogen/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1968, in __getattr__
+    raise AttributeError(
+AttributeError: 'GradSampleModule' object has no attribute 'decode'
+
+2026-06-27 12:59:15,699 | INFO    | 
+============================================================
+2026-06-27 12:59:15,699 | INFO    | Training DP-TVAE with epsilon = inf
+2026-06-27 12:59:15,699 | INFO    | ============================================================
+2026-06-27 12:59:15,699 | INFO    | Running: /home/user35/miniconda3/envs/synthogen/bin/python models/dp_tvae.py --dataset diabetes --input data/processed/diabetes_mcdd_clean.csv --output data/synthetic/dp_tvae_epsinf.csv --epsilon 9999.0 --epochs 50
+2026-06-27 12:59:19,852 | INFO    | 
+2026-06-27 12:59:19,852 | INFO    | Running evaluation...
+2026-06-27 12:59:23,058 | INFO    | 
+2026-06-27 12:59:23,058 | INFO    | ✅ Epsilon inf: Acc=0.8789, DCR=2.6518
+2026-06-27 12:59:23,058 | INFO    | 
+✅ Ablation study complete. Results saved to eval/ablation_results.json
+2026-06-27 12:59:23,058 | INFO    | 
+Summary:
+2026-06-27 12:59:23,058 | INFO    |   ε=  inf -> Accuracy: 0.8789, DCR: 2.6518

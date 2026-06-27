@@ -1,0 +1,204 @@
+{
+  "dataset": "diabetes",
+  "rows": 8047,
+  "columns": 34,
+  "nan_count": 0,
+  "duplicate_rows": 0,
+  "target_col": "Diabetes_Target",
+  "target_present": true,
+  "checks_passed": true,
+  "issues": [],
+  "numeric_ranges": {
+    "Age": {
+      "min": 5.0,
+      "max": 96.0
+    },
+    "Sex": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "FBS_mg_dL": {
+      "min": 71.0,
+      "max": 381.0
+    },
+    "PPBS_mg_dL": {
+      "min": 96.0,
+      "max": 495.02000000000044
+    },
+    "HbA1c_percent": {
+      "min": -52.92461262555524,
+      "max": 387.9515000000004
+    },
+    "BMI": {
+      "min": 15.734698812900001,
+      "max": 42.16161561679994
+    },
+    "Weight_kg": {
+      "min": 37.576,
+      "max": 110.41199999999999
+    },
+    "Height_cm": {
+      "min": 139.0,
+      "max": 181.0
+    },
+    "BP_Systolic_mmHg": {
+      "min": 61.0,
+      "max": 171.0
+    },
+    "Pulse_bpm": {
+      "min": 68.0,
+      "max": 113.9399999999996
+    },
+    "Total_Cholesterol_mg_dL": {
+      "min": 89.97,
+      "max": 668.0
+    },
+    "HDL_Cholesterol_mg_dL": {
+      "min": -4.2933055398571165,
+      "max": 181.71999999999935
+    },
+    "LDL_Cholesterol_mg_dL": {
+      "min": 8.6,
+      "max": 189.2
+    },
+    "Triglycerides_mg_dL": {
+      "min": 48.0,
+      "max": 1030.1400000000094
+    },
+    "Serum_Creatinine_mg_dL": {
+      "min": -11.428058736482681,
+      "max": 147.03529999999992
+    },
+    "TSH_uIU_mL": {
+      "min": -5.796246345070666,
+      "max": 87.4
+    },
+    "Diabetes_Target": {
+      "min": 0.0,
+      "max": 2.0
+    },
+    "Serum_Creatinine_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "TSH_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "TotalChol_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Triglycerides_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "HDL_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "LDL_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "HbA1c_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "PPBS_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "FBS_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Pulse_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "BP_Systolic_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "BMI_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Height_is_missing": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Comorbidity_Documented": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Has_Hypertension": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "Has_Hypothyroidism": {
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "target_distribution": {
+    "2": 0.7215,
+    "0": 0.2196,
+    "1": 0.0589
+  },
+  "raw_rows": 16353,
+  "duplicates_removed": 8219,
+  "post_imputation_duplicates_removed": 87,
+  "missingness_flags": [
+    "Serum_Creatinine_is_missing",
+    "TSH_is_missing",
+    "TotalChol_is_missing",
+    "Triglycerides_is_missing",
+    "HDL_is_missing",
+    "LDL_is_missing",
+    "HbA1c_is_missing",
+    "PPBS_is_missing",
+    "FBS_is_missing",
+    "Pulse_is_missing",
+    "BP_Systolic_is_missing",
+    "BMI_is_missing",
+    "Height_is_missing"
+  ],
+  "output_columns": [
+    "Age",
+    "Sex",
+    "FBS_mg_dL",
+    "PPBS_mg_dL",
+    "HbA1c_percent",
+    "BMI",
+    "Weight_kg",
+    "Height_cm",
+    "BP_Systolic_mmHg",
+    "Pulse_bpm",
+    "Total_Cholesterol_mg_dL",
+    "HDL_Cholesterol_mg_dL",
+    "LDL_Cholesterol_mg_dL",
+    "Triglycerides_mg_dL",
+    "Serum_Creatinine_mg_dL",
+    "TSH_uIU_mL",
+    "Diabetes_Status",
+    "Diabetes_Target",
+    "Serum_Creatinine_is_missing",
+    "TSH_is_missing",
+    "TotalChol_is_missing",
+    "Triglycerides_is_missing",
+    "HDL_is_missing",
+    "LDL_is_missing",
+    "HbA1c_is_missing",
+    "PPBS_is_missing",
+    "FBS_is_missing",
+    "Pulse_is_missing",
+    "BP_Systolic_is_missing",
+    "BMI_is_missing",
+    "Height_is_missing",
+    "Comorbidity_Documented",
+    "Has_Hypertension",
+    "Has_Hypothyroidism"
+  ]
+}
