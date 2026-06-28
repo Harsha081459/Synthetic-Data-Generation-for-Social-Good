@@ -1,217 +1,63 @@
 {
-    "dataset_real": "data/processed/synthea_flattened.csv",
-    "dataset_synth": "data/synthetic/ctgan_synthea.csv",
-    "target": "Cond_Essential_hypertension",
-    "utility": {
-        "baseline_accuracy": 0.86,
-        "baseline_f1": 0.8514,
-        "tstr_accuracy": 0.74,
-        "tstr_f1": 0.6506,
-        "utility_loss_gap": 0.12
-    },
-    "privacy_dcr": {
-        "avg_dcr": 5.8512,
-        "median_dcr": 5.857,
-        "min_dcr": 2.9595,
-        "exact_match_count": 0,
-        "exact_match_percent": 0.0
-    },
-    "privacy_k_anonymity": {
-        "k_min": 1,
-        "k_median": 5,
-        "k_mean": 5.02,
-        "pct_records_k_leq_5": 45.49,
-        "distribution": {
-            "1-5": 124,
-            "6-10": 71,
-            "11-20": 4,
-            "21-50": 0,
-            "51+": 0
-        }
-    },
-    "privacy_reidentification": {
-        "avg_risk_score": 0.0041,
-        "max_risk_score": 0.0518,
-        "high_risk_count": 0,
-        "high_risk_percent": 0.0
-    },
-    "fidelity_correlation": {
-        "corr_matrix_mae": 0.1065
-    },
-    "fidelity_column_shapes": {
-        "avg_ks_statistic": 0.1599,
-        "columns_passed_pct": 47.4,
-        "per_column": {
-            "gender": {
-                "ks_statistic": 0.0852,
-                "p_value": 0.0014
-            },
-            "maritalStatus": {
-                "ks_statistic": 0.1283,
-                "p_value": 0.0
-            },
-            "race": {
-                "ks_statistic": 0.016,
-                "p_value": 0.9995
-            },
-            "ethnicity": {
-                "ks_statistic": 0.018,
-                "p_value": 0.9969
-            },
-            "glucose_mg_dL": {
-                "ks_statistic": 0.7154,
-                "p_value": 0.0
-            },
-            "creatinine_mg_dL": {
-                "ks_statistic": 0.3998,
-                "p_value": 0.0
-            },
-            "height_cm": {
-                "ks_statistic": 0.3597,
-                "p_value": 0.0
-            },
-            "weight_kg": {
-                "ks_statistic": 0.4749,
-                "p_value": 0.0
-            },
-            "bmi": {
-                "ks_statistic": 0.1984,
-                "p_value": 0.0
-            },
-            "diastolic_bp": {
-                "ks_statistic": 0.4299,
-                "p_value": 0.0
-            },
-            "systolic_bp": {
-                "ks_statistic": 0.3036,
-                "p_value": 0.0
-            },
-            "heart_rate": {
-                "ks_statistic": 0.1764,
-                "p_value": 0.0
-            },
-            "cholesterol_mg_dL": {
-                "ks_statistic": 0.3828,
-                "p_value": 0.0
-            },
-            "triglycerides_mg_dL": {
-                "ks_statistic": 0.3848,
-                "p_value": 0.0
-            },
-            "ldl_mg_dL": {
-                "ks_statistic": 0.4158,
-                "p_value": 0.0
-            },
-            "hdl_mg_dL": {
-                "ks_statistic": 0.4078,
-                "p_value": 0.0
-            },
-            "smoking_status": {
-                "ks_statistic": 0.0301,
-                "p_value": 0.7583
-            },
-            "age": {
-                "ks_statistic": 0.3287,
-                "p_value": 0.0
-            },
-            "Cond_Medication_review_due_situation": {
-                "ks_statistic": 0.0361,
-                "p_value": 0.535
-            },
-            "Cond_Full-time_employment": {
-                "ks_statistic": 0.1082,
-                "p_value": 0.0
-            },
-            "Cond_Received_higher_education": {
-                "ks_statistic": 0.1363,
-                "p_value": 0.0
-            },
-            "Cond_Body_mass_index_30+_-_obesity": {
-                "ks_statistic": 0.0822,
-                "p_value": 0.0024
-            },
-            "Cond_Stress": {
-                "ks_statistic": 0.015,
-                "p_value": 0.9999
-            },
-            "Cond_Prediabetes": {
-                "ks_statistic": 0.0671,
-                "p_value": 0.0222
-            },
-            "Cond_Anemia": {
-                "ks_statistic": 0.0451,
-                "p_value": 0.2624
-            },
-            "Cond_Essential_hypertension": {
-                "ks_statistic": 0.008,
-                "p_value": 1.0
-            },
-            "Cond_Educated_to_high_school_level": {
-                "ks_statistic": 0.014,
-                "p_value": 1.0
-            },
-            "Cond_Chronic_pain": {
-                "ks_statistic": 0.0511,
-                "p_value": 0.1476
-            },
-            "Cond_Chronic_sinusitis": {
-                "ks_statistic": 0.005,
-                "p_value": 1.0
-            },
-            "Cond_Has_a_criminal_record": {
-                "ks_statistic": 0.0501,
-                "p_value": 0.1633
-            },
-            "Cond_Past_pregnancy_history_of_miscarriage_situation": {
-                "ks_statistic": 0.0691,
-                "p_value": 0.0169
-            },
-            "Cond_Victim_of_intimate_partner_abuse": {
-                "ks_statistic": 0.015,
-                "p_value": 0.9999
-            },
-            "Cond_Risk_activity_involvement": {
-                "ks_statistic": 0.0371,
-                "p_value": 0.4993
-            },
-            "Cond_Social_isolation": {
-                "ks_statistic": 0.001,
-                "p_value": 1.0
-            },
-            "Cond_Ischemic_heart_disease": {
-                "ks_statistic": 0.0341,
-                "p_value": 0.6089
-            },
-            "Cond_Abnormal_findings_diagnostic_imaging_heart+coronary_circulat": {
-                "ks_statistic": 0.014,
-                "p_value": 1.0
-            },
-            "Cond_Chronic_low_back_pain": {
-                "ks_statistic": 0.011,
-                "p_value": 1.0
-            },
-            "Cond_Metabolic_syndrome_X": {
-                "ks_statistic": 0.021,
-                "p_value": 0.9801
-            }
-        }
-    },
-    "fidelity_pairwise_trends": {
-        "trend_accuracy_pct": 52.2,
-        "pairs_matched": 367,
-        "pairs_total": 703
-    },
-    "fidelity_class_distribution": {
-        "jensen_shannon_divergence": 0.0065,
-        "per_class": {
-            "0": {
-                "real_pct": 75.45,
-                "synth_pct": 74.65
-            },
-            "1": {
-                "real_pct": 24.55,
-                "synth_pct": 25.35
-            }
-        }
+  "dataset_real": "data/processed/synthea_flattened.csv",
+  "dataset_synth": "data/synthetic/ctgan_synthea.csv",
+  "target": "Cond_Essential_hypertension",
+  "utility": {
+    "baseline_accuracy": 0.86,
+    "baseline_f1": 0.8514,
+    "tstr_accuracy": 0.74,
+    "tstr_f1": 0.6506,
+    "utility_loss_gap": 0.12
+  },
+  "privacy_dcr": {
+    "avg_dcr": 5.8512,
+    "median_dcr": 5.857,
+    "min_dcr": 2.9595,
+    "max_dcr": 8.7198,
+    "exact_match_count": 0,
+    "exact_match_percent": 0.0
+  },
+  "privacy_reidentification": {
+    "avg_risk_score": 0.1483,
+    "max_risk_score": 0.2526,
+    "min_risk_score": 0.1029,
+    "pct_high_risk": 0.0
+  },
+  "privacy_k_anonymity": {
+    "k_min": 12,
+    "k_max": 91,
+    "k_mean": 49.9,
+    "pct_records_k_leq_5": 0.0,
+    "distribution": {
+      "1-5": 0,
+      "6-10": 0,
+      "11-20": 26,
+      "21-50": 295,
+      "51+": 677
     }
+  },
+  "fidelity_correlation": {
+    "corr_matrix_mae": 0.1065
+  },
+  "fidelity_column_shapes": {
+    "avg_ks_statistic": 0.1599,
+    "max_ks_statistic": 0.7154
+  },
+  "fidelity_pairwise_trends": {
+    "trend_accuracy_pct": 75.6,
+    "pairs_checked": 45
+  },
+  "fidelity_class_distribution": {
+    "jensen_shannon_divergence": 0.0065,
+    "per_class": {
+      "0": {
+        "real_pct": 75.45,
+        "synth_pct": 74.65
+      },
+      "1": {
+        "real_pct": 24.55,
+        "synth_pct": 25.35
+      }
+    }
+  }
 }

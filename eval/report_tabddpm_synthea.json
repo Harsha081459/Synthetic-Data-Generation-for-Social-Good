@@ -1,0 +1,20 @@
+{
+    "dataset_real": "data/processed/synthea_flattened.csv",
+    "dataset_synth": "data/synthetic/tabddpm_synthea.csv",
+    "target": "Cond_Essential_hypertension",
+    "utility": {
+        "baseline_accuracy": 0.86,
+        "baseline_f1": 0.8514345991561182,
+        "tstr_accuracy": 0.66,
+        "tstr_f1": 0.6816980056980058,
+        "utility_loss_gap": 0.19999999999999996
+    },
+    "privacy": {
+        "avg_dcr": 17.702228196761045,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "fidelity": {
+        "corr_matrix_mae": 0.10234878488576972
+    }
+}

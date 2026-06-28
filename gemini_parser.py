@@ -65,8 +65,19 @@ Rules:
 # Public API
 # ---------------------------------------------------------------------------
 def get_api_key():
-    """Return the Groq API key or None."""
-    return os.environ.get("GROQ_API_KEY")
+    """Return the Groq API key or None. Checks env vars and Streamlit secrets."""
+    key = os.environ.get("GROQ_API_KEY")
+    if key:
+        return key
+    # Fallback: check Streamlit secrets (for Streamlit Cloud deployment)
+    try:
+        import streamlit as st
+        key = st.secrets.get("GROQ_API_KEY")
+        if key:
+            return key
+    except Exception:
+        pass
+    return None
 
 
 def parse_prompt(prompt):

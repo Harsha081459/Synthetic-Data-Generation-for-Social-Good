@@ -1,0 +1,20 @@
+{
+    "dataset_real": "data/processed/framingham_clean.csv",
+    "dataset_synth": "data/synthetic/tabsyn_framingham.csv",
+    "target": "TenYearCHD",
+    "utility": {
+        "baseline_accuracy": 0.8278301886792453,
+        "baseline_f1": 0.7822042325959819,
+        "tstr_accuracy": 0.847877358490566,
+        "tstr_f1": 0.7780776270002769,
+        "utility_loss_gap": -0.02004716981132071
+    },
+    "privacy": {
+        "avg_dcr": 1.9167041970243408,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "fidelity": {
+        "corr_matrix_mae": 0.10716503591907119
+    }
+}

@@ -63,7 +63,7 @@ def validate_and_normalize(raw):
         num = int(num)
     except (TypeError, ValueError):
         num = 100
-    result["num_patients"] = max(1, min(num, 5000))
+    result["num_patients"] = max(1, min(num, 10000))
 
     # --- gender ---
     gender_raw = raw.get("gender")

@@ -1,0 +1,20 @@
+{
+    "dataset_real": "data/processed/diabetes_mcdd_clean.csv",
+    "dataset_synth": "data/synthetic/tabddpm_diabetes.csv",
+    "target": "Diabetes_Target",
+    "utility": {
+        "baseline_accuracy": 0.9981561155500922,
+        "baseline_f1": 0.9981548957069644,
+        "tstr_accuracy": 0.9459127228027043,
+        "tstr_f1": 0.9343705072391585,
+        "utility_loss_gap": 0.05224339274738787
+    },
+    "privacy": {
+        "avg_dcr": 4.319853960381171,
+        "exact_match_count": 0,
+        "exact_match_percent": 0.0
+    },
+    "fidelity": {
+        "corr_matrix_mae": 0.0685992914321236
+    }
+}
