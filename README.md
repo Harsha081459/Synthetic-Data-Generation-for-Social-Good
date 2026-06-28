@@ -25,7 +25,7 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 **SynthoGen AI** solves this by generating **100% synthetic** patient cohorts that:
 - ✅ Preserve statistical distributions and clinical correlations
 - ✅ Achieve **zero privacy breaches** (0 exact matches across all models)
-- ✅ Maintain **84.79% ML utility** (TSTR accuracy), matching real-data baselines
+- ✅ Maintain up to **94.59% ML utility** (TSTR accuracy) on Diabetes, **84.79%** on Framingham
 - ✅ Withstand formal privacy audits (DCR, K-Anonymity, Re-Identification Risk)
 
 ---
@@ -70,14 +70,25 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 
 ## 📊 Key Results
 
-| Model | Utility (TSTR) | Avg DCR | K-Anonymity | Re-ID Risk | Privacy Breaches |
-|-------|:--------------:|:-------:|:-----------:|:----------:|:----------------:|
-| **TabSyn** | **84.79%** | 0.312 | 1.8 | 0.041 | **0** |
-| TabDDPM | 83.15% | 0.298 | 2.1 | 0.038 | **0** |
-| CTGAN | 81.42% | 0.287 | 1.5 | 0.045 | **0** |
-| TVAE | 80.91% | 0.301 | 1.6 | 0.043 | **0** |
+### Per-Dataset TSTR Accuracy (Train on Synthetic, Test on Real)
 
-> **TabSyn (Latent Diffusion)** achieves the highest ML utility while maintaining zero privacy breaches across all datasets.
+| Model | Diabetes MCDD | Framingham Heart | Synthea EHR |
+|-------|:------------:|:----------------:|:-----------:|
+| **TabDDPM** | **94.59%** | 84.32% | 66.0% |
+| **TabSyn** | 94.10% | **84.79%** | **83.5%** |
+| **TVAE** | 94.47% | 84.79% | 80.5% |
+| **CTGAN** | 88.94% | 83.02% | 74.0% |
+
+### Privacy Metrics (Averaged Across All Datasets)
+
+| Model | Avg DCR ↑ | K-Anonymity ↑ | Re-ID Risk ↓ | Privacy Breaches |
+|-------|:---------:|:-------------:|:------------:|:----------------:|
+| **TabSyn** | 7.11 | 61.2 | 0.218 | **0** |
+| **TabDDPM** | 7.99 | 176.7 | 0.224 | **0** |
+| **CTGAN** | 3.98 | 59.6 | 0.233 | **0** |
+| **TVAE** | 2.41 | 60.4 | 0.336 | **0** |
+
+> **Zero privacy breaches** across all 4 models and all 3 datasets. TabSyn and TabDDPM achieve the strongest privacy guarantees (highest DCR, lowest Re-ID risk) while maintaining competitive ML utility.
 
 ---
 
