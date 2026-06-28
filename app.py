@@ -231,8 +231,6 @@ with st.sidebar:
     dataset_select = st.selectbox("📂 Active Dataset", list(DATASET_CONFIGS.keys()))
     st.markdown("---")
     st.caption("Powered by TabSyn Latent Diffusion  \nIEEE DataPort Hackathon 2026")
-    st.markdown("---")
-    st.markdown("[🔗 View our IEEE DataPort Publication](https://ieee-dataport.org/documents/provably-private-synthetic-ehr-cohorts-latent-diffusion-tabsyn)")
 
 
 # ============================================================================
@@ -615,7 +613,7 @@ elif page == "🧬 Live Generator":
             )
             num_samples = st.number_input(
                 "🔢 Number of Patients",
-                min_value=1, max_value=1000, value=100, step=10,
+                min_value=1, max_value=10000, value=100, step=10,
                 key="man_num",
             )
             st.write("")
@@ -709,71 +707,78 @@ elif page == "🧬 Live Generator":
                     summary = prompt_parser.format_constraints_summary(constraints)
                     st.info(summary)
 
-                    # Generate using the model
-                    num_needed = min(constraints.get("num_patients", 100), 1000)
+                    # Generate using the model — iterative approach to guarantee
+                    # we deliver the EXACT number of patients requested.
+                    num_needed = min(constraints.get("num_patients", 100), 10000)
 
-                    with st.spinner(f"🧬 Generating patients with {MODEL_LABELS[p2p_model]}..."):
-                        pool_size = min(num_needed * 5, 5000)
-                        pool_df, method = generate_with_model(p2p_model, p2p_dataset, pool_size)
-
-                    if pool_df is not None and len(pool_df) > 0:
-                        # Apply constraint filters
-                        mask = pd.Series([True] * len(pool_df), index=pool_df.index)
-
-                        # Gender
-                        gender_val = constraints.get("gender")
-                        if gender_val is not None:
+                    def _apply_filters(df, cons):
+                        """Apply constraint filters and return matching rows."""
+                        m = pd.Series([True] * len(df), index=df.index)
+                        gv = cons.get("gender")
+                        if gv is not None:
                             for gc in ["Sex", "male", "gender"]:
-                                if gc in pool_df.columns:
-                                    target = ("M" if gender_val == 1 else "F") if gc == "gender" else gender_val
-                                    mask = mask & (pool_df[gc] == target)
+                                if gc in df.columns:
+                                    tgt = ("M" if gv == 1 else "F") if gc == "gender" else gv
+                                    m = m & (df[gc] == tgt)
                                     break
-
-                        # Age
                         for ac in ["Age", "age"]:
-                            if ac in pool_df.columns:
-                                if constraints.get("age_min") is not None:
-                                    mask = mask & (pool_df[ac] >= constraints["age_min"])
-                                if constraints.get("age_max") is not None:
-                                    mask = mask & (pool_df[ac] <= constraints["age_max"])
+                            if ac in df.columns:
+                                if cons.get("age_min") is not None:
+                                    m = m & (df[ac] >= cons["age_min"])
+                                if cons.get("age_max") is not None:
+                                    m = m & (df[ac] <= cons["age_max"])
+                                break
+                        for _, col, fn in cons.get("condition_filters", []):
+                            if col in df.columns:
+                                m = m & df[col].apply(fn)
+                        return df[m]
+
+                    with st.spinner(f"🧬 Generating {num_needed} patients with {MODEL_LABELS[p2p_model]}..."):
+                        collected = pd.DataFrame()
+                        method = "live_inference"
+                        # Try up to 3 rounds with increasing pool size
+                        for attempt, multiplier in enumerate([10, 25, 50], 1):
+                            pool_size = min(num_needed * multiplier, 50000)
+                            pool_df, method = generate_with_model(p2p_model, p2p_dataset, pool_size)
+                            if pool_df is None or len(pool_df) == 0:
+                                break
+                            matches = _apply_filters(pool_df, constraints)
+                            collected = pd.concat([collected, matches]).drop_duplicates().reset_index(drop=True)
+                            if len(collected) >= num_needed:
                                 break
 
-                        # Conditions
-                        for _, col, fn in constraints.get("condition_filters", []):
-                            if col in pool_df.columns:
-                                mask = mask & pool_df[col].apply(fn)
+                    if len(collected) == 0:
+                        st.warning("No patients matched all constraints. "
+                                   "Try broader criteria (e.g., remove gender or widen age range).")
+                    elif len(collected) > 0:
+                        result = collected.head(num_needed).reset_index(drop=True)
 
-                        filtered = pool_df[mask]
-
-                        if len(filtered) == 0:
-                            st.warning("No patients matched all constraints. "
-                                       "Try broader criteria (e.g., remove gender or widen age range).")
+                        if len(result) < num_needed:
+                            st.warning(f"Found **{len(result)}** matching patients out of {num_needed} requested. "
+                                       f"Constraints may be too narrow for the available data.")
+                        
+                        if method == "live_inference":
+                            st.success(f"Generated **{len(result)}** matching patients via live **{MODEL_LABELS[p2p_model]}** inference.")
                         else:
-                            take = min(num_needed, len(filtered))
-                            result = filtered.sample(n=take, replace=False).reset_index(drop=True)
+                            st.success(f"Generated **{len(result)}** matching patients from **{MODEL_LABELS[p2p_model]}** model.")
 
-                            if method == "live_inference":
-                                st.success(f"Generated **{len(result)}** matching patients via live **{MODEL_LABELS[p2p_model]}** inference.")
-                            else:
-                                st.success(f"Generated **{len(result)}** matching patients from **{MODEL_LABELS[p2p_model]}** model.")
+                        c1, c2, c3 = st.columns(3)
+                        with c1: st.metric("Patients", f"{len(result):,}")
+                        gc = next((c for c in ["Sex","male","gender"] if c in result.columns), None)
+                        if gc:
+                            male_map = {"Sex": 1, "male": 1, "gender": "M"}
+                            m_pct = (result[gc] == male_map.get(gc, 1)).mean() * 100
+                            with c2: st.metric("Male / Female", f"{m_pct:.0f}% / {100-m_pct:.0f}%")
+                        ac = next((c for c in ["Age","age"] if c in result.columns), None)
+                        if ac:
+                            with c3: st.metric("Avg Age", f"{result[ac].mean():.1f}")
 
-                            c1, c2, c3 = st.columns(3)
-                            with c1: st.metric("Patients", f"{len(result)} / {num_needed}")
-                            gc = next((c for c in ["Sex","male","gender"] if c in result.columns), None)
-                            if gc:
-                                male_map = {"Sex": 1, "male": 1, "gender": "M"}
-                                m_pct = (result[gc] == male_map.get(gc, 1)).mean() * 100
-                                with c2: st.metric("Male / Female", f"{m_pct:.0f}% / {100-m_pct:.0f}%")
-                            ac = next((c for c in ["Age","age"] if c in result.columns), None)
-                            if ac:
-                                with c3: st.metric("Avg Age", f"{result[ac].mean():.1f}")
+                        st.dataframe(result, use_container_width=True, height=350)
 
-                            st.dataframe(result, use_container_width=True, height=350)
-
-                            csv = result.to_csv(index=False).encode("utf-8")
-                            st.download_button("📥 Download Cohort CSV", data=csv,
-                                               file_name=f"cohort_{p2p_dataset}_{int(time.time())}.csv",
-                                               mime="text/csv", use_container_width=True, key="p2p_dl")
+                        csv = result.to_csv(index=False).encode("utf-8")
+                        st.download_button("📥 Download Cohort CSV", data=csv,
+                                           file_name=f"cohort_{p2p_dataset}_{int(time.time())}.csv",
+                                           mime="text/csv", use_container_width=True, key="p2p_dl")
                     else:
                         st.error("Generation failed — model or data not found.")
             else:

@@ -23,7 +23,7 @@ import pandas as pd
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
-DEFAULT_DATA_PATH = "data/synthetic/tabddpm_diabetes.csv"
+DEFAULT_DATA_PATH = "data/processed/diabetes_mcdd_clean.csv"
 NOISE_SCALE = 0.05  # std multiplier for Gaussian noise
 
 
