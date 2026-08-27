@@ -147,7 +147,7 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 
 ```bash
 # Clone the repository
-git clone https://github.com/Harsha081459/Synthetic-Data-Generation-for-Social-Good.git
+git clone https://github.com/Lohith248/Synthetic-Data-Generation-for-Social-Good.git
 cd Synthetic-Data-Generation-for-Social-Good
 
 # Install dependencies
@@ -222,6 +222,16 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
 | **Lohith P** |
 | **Anish Reddy** |
 | **Vishal Sriram K** |
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+- Setting up the development environment
+- Running tests
+- Submitting pull requests
+- Code style guidelines
 
 ---
 

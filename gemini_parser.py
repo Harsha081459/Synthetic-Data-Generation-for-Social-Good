@@ -177,13 +177,27 @@ def fallback_parse(prompt):
         result["gender"] = "female"
         
     # Age min/max
-    age_min_match = re.search(r'(?:over|older than|>)\s*(?:age)?\s*(\d+)', prompt_lower)
-    if age_min_match:
-        result["age_min"] = int(age_min_match.group(1))
+    # Handle range patterns first: "between 40 and 60", "aged 50 to 70", "ages 40-60"
+    age_range_match = re.search(
+        r'(?:between|aged?)\s*(\d+)\s*(?:and|to|-)\s*(\d+)', prompt_lower
+    )
+    if not age_range_match:
+        # Also match patterns like "40-60 years" or "40 to 60 years"
+        age_range_match = re.search(
+            r'(\d+)\s*(?:to|-)\s*(\d+)\s*(?:years?\s*old|years?|yrs?)', prompt_lower
+        )
+    if age_range_match:
+        result["age_min"] = int(age_range_match.group(1))
+        result["age_max"] = int(age_range_match.group(2))
+    else:
+        # Single-bound patterns: "over age 50", "under 30"
+        age_min_match = re.search(r'(?:over|older than|above|>)\s*(?:age)?\s*(\d+)', prompt_lower)
+        if age_min_match:
+            result["age_min"] = int(age_min_match.group(1))
         
-    age_max_match = re.search(r'(?:under|younger than|<)\s*(?:age)?\s*(\d+)', prompt_lower)
-    if age_max_match:
-        result["age_max"] = int(age_max_match.group(1))
+        age_max_match = re.search(r'(?:under|younger than|below|<)\s*(?:age)?\s*(\d+)', prompt_lower)
+        if age_max_match:
+            result["age_max"] = int(age_max_match.group(1))
         
     # Conditions
     conditions = []
