@@ -1,5 +1,6 @@
 # 🧬 SynthoGen AI: Privacy-Preserving Synthetic Healthcare Data
 
+![CI](https://github.com/Harsha081459/Synthetic-Data-Generation-for-Social-Good/actions/workflows/ci.yml/badge.svg)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![PyTorch 2.1+](https://img.shields.io/badge/PyTorch-2.1+-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)](https://synthetic-data-generation-for-social-good.streamlit.app)
@@ -128,7 +129,7 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 │   ├── dp_tvae.py              # Differentially-private TVAE
 │   └── balanced_generator.py   # Class-balanced generation
 │
-└── saved_models/               # Trained model weights
+└── saved_models/               # Trained model weights (NOT committed — see Quick Start)
     ├── tvae_*.pkl              # SDV pickle models (live inference)
     ├── ctgan_*.pkl
     ├── tabddpm_*.pt            # PyTorch diffusion weights
@@ -147,8 +148,13 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 
 ```bash
 # Clone the repository
-git clone https://github.com/Lohith248/Synthetic-Data-Generation-for-Social-Good.git
+git clone https://github.com/Harsha081459/Synthetic-Data-Generation-for-Social-Good.git
 cd Synthetic-Data-Generation-for-Social-Good
+
+# Create a virtual environment
+python -m venv .venv
+.venv\Scripts\activate        # Windows
+# source .venv/bin/activate   # macOS / Linux
 
 # Install dependencies
 pip install -r requirements.txt
@@ -156,6 +162,26 @@ pip install -r requirements.txt
 # Run the dashboard
 streamlit run app.py
 ```
+
+> **What works from a clean clone:** the Leaderboard, Expanded Metrics,
+> Bias & Fairness, and DP-SGD Ablation tabs read the committed
+> `eval/report_*_full.json` / `eval/ablation_results.json` files, and the
+> generator tabs sample from the committed `data/synthetic/*.csv` pools.
+> `saved_models/*.pkl` (TVAE/CTGAN weights for true live re-inference) are
+> **not committed** — when absent the app transparently falls back to the
+> cached pools. Retrain them with `models/train_tvae.py` / `models/train_ctgan.py`.
+> The Prompt-to-Patient tab needs `GROQ_API_KEY`; without it the app shows an
+> error for that feature only — everything else still works.
+
+### Tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
+```
+
+The suite covers the prompt parsers and the core `eval/evaluate.py` metric
+functions on toy data — no datasets, weights, or network required.
 
 ### Environment Variables (Optional — for Prompt-to-Patient feature)
 
@@ -193,10 +219,31 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
 
 ## 🧪 Evaluation Methodology
 
-- **TSTR (Train on Synthetic, Test on Real):** XGBoost classifiers trained on synthetic data, evaluated on held-out real data
+- **TSTR (Train on Synthetic, Test on Real):** LightGBM classifiers trained on synthetic data, evaluated on held-out real data (`eval/evaluate.py`)
 - **Correlation Matrix MAE:** Measures how well inter-feature correlations are preserved
 - **Distribution Fidelity:** KDE-based comparison of marginal distributions
 - **Bias & Fairness Audit:** Demographic parity analysis across protected attributes
+
+---
+
+## ⚠️ Limitations
+
+- **Privacy metrics are empirical audits, not proofs.** DCR, k-anonymity, and
+  re-identification risk in `eval/evaluate.py` measure distance/coverage on the
+  evaluated samples — "0 privacy breaches" means zero synthetic rows within
+  1e-6 of a real row, not a guarantee against memorization. Only the DP-SGD
+  ablation (`models/dp_tvae.py`, Opacus `PrivacyEngine`, ε = 1.0–∞) provides
+  formal differential privacy.
+- **TSTR uses a single classifier family.** Utility is measured with
+  LightGBM only (`eval/evaluate.py`); results may differ for other model
+  families.
+- **The Synthea "real" dataset is itself simulated.** Evaluating against it
+  is not the same as evaluating against real EHR, and its evaluation subset is
+  small (998 records — see Datasets table).
+- **Dashboard "live generation" is model-dependent.** TabDDPM/TabSyn sample
+  from committed model-output pools plus small Gaussian micro-noise
+  (`app.py` `generate_with_model`); only TVAE/CTGAN run true inference, and
+  only when `saved_models/*.pkl` exist (not committed).
 
 ---
 
@@ -205,7 +252,7 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
 | Component | Technology |
 |-----------|-----------|
 | **Generative Models** | TVAE, CTGAN (SDV), TabDDPM, TabSyn (PyTorch) |
-| **Evaluation** | SDMetrics, Anonymeter, XGBoost, Scikit-learn |
+| **Evaluation** | LightGBM, Scikit-learn, SciPy |
 | **Dashboard** | Streamlit, Plotly |
 | **LLM Integration** | Groq (Llama 3.3 70B) for natural language parsing |
 | **Training Infrastructure** | NVIDIA GPU Server (CUDA 12.x) |

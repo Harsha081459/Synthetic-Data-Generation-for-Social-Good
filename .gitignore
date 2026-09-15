@@ -70,3 +70,17 @@ final_sync.py
 verify_and_deploy.py
 profile_datasets.py
 run_all_evals.py
+
+# Test/lint caches
+.pytest_cache/
+.ruff_cache/
+
+# Trained model weights (too large for GitHub)
+saved_models/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.pkl
+*.joblib
+checkpoints/
