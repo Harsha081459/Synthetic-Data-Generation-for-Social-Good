@@ -143,7 +143,7 @@ The saved reports contain up to **94.59% classifier accuracy**, not 94.59% retai
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
+- Python 3.12 (tested runtime and Community Cloud deployment setting)
 - pip
 
 ### Installation
@@ -171,18 +171,29 @@ streamlit run app.py
 > generator tabs sample from the committed `data/synthetic/*.csv` pools.
 > `saved_models/*.pkl` (TVAE/CTGAN weights for true live re-inference) are
 > **not committed** — when absent the app transparently falls back to the
-> cached pools. Retrain them with `models/train_tvae.py` / `models/train_ctgan.py`.
+> cached pools. For training or loading SDV checkpoint pickles, first install
+> `pip install -r requirements-training.txt`, then use `models/train_tvae.py`
+> or `models/train_ctgan.py`. The default cloud runtime deliberately excludes
+> PyTorch, SDV, Opacus and the evaluation stack.
 > Prompt-to-Patient works offline with the regex parser when `GROQ_API_KEY`
 > is absent. Supplying a key enables an external Groq call containing the prompt;
 > do not enter confidential patient information. Unsupported dataset conditions
 > are rejected rather than silently ignored.
 
+### Community Cloud deployment
+
+Configure repository `Harsha081459/Synthetic-Data-Generation-for-Social-Good`, branch `main`, entrypoint `app.py`, and Python **3.12**. Community Cloud reads root `requirements.txt`, which now includes only `requirements-demo.txt`. No API key is needed for the cached dashboard or regex-based cohort demo.
+
+If the host displays **Oh no / Error running app**, open **Manage app → Logs** to check whether installation failed or the process exceeded resources. Reboot the app after the latest commit is deployed. A successful GitHub test run is not proof that the hosted process restarted successfully. Do not install `requirements-training.txt` on the small dashboard instance unless you specifically need live SDV checkpoint inference.
+
 ### Tests
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q
+python -m pytest tests/test_dashboard.py tests/test_cohort.py -q
 ```
+
+For the full evaluation suite, also install `lightgbm==4.7.0 scikit-learn==1.9.1 scipy==1.17.1`, then run `python -m pytest -q`.
 
 The suite covers prompt parsers, constraint enforcement, metric functions and Streamlit interaction tests. Dashboard tests use the committed datasets to navigate all six pages for all three datasets, sample all four model pools and generate a constrained cohort offline. No model checkpoints, credentials or external API calls are required.
 
