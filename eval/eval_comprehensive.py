@@ -23,7 +23,8 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
     df_synth = pd.read_csv(synth_path)
 
     # Align columns
-    common = [c for c in df_real.columns if c in df_synth.columns]
+    aliases = {"Diabetes_Status"} if target_col == "Diabetes_Target" else set()
+    common = [c for c in df_real.columns if c in df_synth.columns and c not in aliases]
     df_r = df_real[common].copy()
     df_s = df_synth[common].copy()
 
@@ -38,7 +39,9 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
     df_r = df_r.dropna()
     df_s = df_s.dropna()
 
-    report = {"dataset_real": real_path, "dataset_synth": synth_path, "target": target_col}
+    report = {"dataset_real": real_path, "dataset_synth": synth_path, "target": target_col,
+              "generator_holdout_verified": False,
+              "limitations": "Classifier split only; generator-training disjointness is not established. Privacy metrics are sampled distance heuristics, not proofs."}
 
     # ============================================================
     # 1. UTILITY (TSTR)
@@ -83,7 +86,7 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
     ds = df_s.select_dtypes(include=[np.number]).sample(sample_n, random_state=42) if len(df_s) > sample_n else df_s.select_dtypes(include=[np.number])
 
     mean = dr.mean()
-    std = dr.std().replace(0, 1)
+    std = dr.std().replace(0, 1).fillna(1)
     r_norm = (dr - mean) / std
     s_norm = (ds - mean) / std
 
@@ -98,6 +101,8 @@ def evaluate_full(real_path, synth_path, target_col, output_path):
         "median_dcr": round(float(np.median(distances)), 4),
         "min_dcr": round(float(np.min(distances)), 4),
         "max_dcr": round(float(np.max(distances)), 4),
+        "reference_rows_evaluated": len(dr),
+        "synthetic_rows_evaluated": len(ds),
         "exact_match_count": int(exact),
         "exact_match_percent": round(float(exact / len(ds) * 100), 2),
     }

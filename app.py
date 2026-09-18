@@ -165,7 +165,7 @@ def get_class_label(target_col, value):
         return str(value)
 
 
-def generate_with_model(model_key, ds_key, num_samples):
+def generate_with_model(model_key, ds_key, num_samples, perturb_cached=False):
     """
     Generate synthetic data using the actual trained model.
     - TVAE / CTGAN: loads the pickle and calls .sample()  (TRUE live inference)
@@ -193,13 +193,16 @@ def generate_with_model(model_key, ds_key, num_samples):
             replace = num_samples > len(pool)
             sample = pool.sample(n=num_samples, replace=replace).reset_index(drop=True)
             # Micro-noise for uniqueness (simulates stochastic re-generation)
-            for col in sample.select_dtypes(include=[np.number]).columns:
-                std = sample[col].std()
-                if std > 0:
-                    sample[col] += np.random.normal(0, std * 0.02, size=len(sample))
-                    if str(pool[col].dtype).startswith("int"):
-                        sample[col] = sample[col].round().astype(int)
-            return sample, "diffusion_pool"
+            if perturb_cached:
+                for col in sample.select_dtypes(include=[np.number]).columns:
+                    if pool[col].nunique() <= 20 or col.startswith(("Has_", "Cond_")) or "missing" in col:
+                        continue
+                    std = sample[col].std()
+                    if std > 0:
+                        sample[col] += np.random.normal(0, std * 0.02, size=len(sample))
+                        if str(pool[col].dtype).startswith("int"):
+                            sample[col] = sample[col].round().astype(int)
+            return sample, "perturbed_cached_pool" if perturb_cached else "cached_pool"
         return None, "error"
 
 
@@ -283,8 +286,11 @@ if page == "🏆 Leaderboard":
         c1, c2, c3, c4 = st.columns(4)
         with c1: metric_card("Best Model", best["Model"], "metric-good")
         with c2: metric_card("Peak Accuracy", f"{best['Utility (TSTR)']*100:.1f}%", "metric-good")
-        with c3: metric_card("Privacy Breaches", "0 Across All", "metric-good")
-        with c4: metric_card("Avg Re-ID Risk", f"{df_lb['Re-ID Risk'].mean()*100:.1f}%", "metric-good")
+        match_counts = [r.get("privacy_dcr", {}).get("exact_match_count") for r in reports.values()]
+        matches_known = all(value is not None for value in match_counts)
+        with c3: metric_card("Sampled exact matches", str(sum(match_counts)) if matches_known else "Not reported")
+        with c4: metric_card("Mean distance-risk score", f"{df_lb['Re-ID Risk'].mean():.3f}")
+        st.warning("Historical classifier accuracy and sampled distance audits are not privacy guarantees. Generator-level held-out split provenance is not recorded; the reported accuracy is not a leakage-free benchmark.")
 
         st.write("")
         st.subheader("📊 Full Comparison Matrix")
@@ -563,7 +569,8 @@ elif page == "⚖️ Bias & Fairness":
 # ============================================================================
 elif page == "🔒 DP-SGD Ablation":
     st.markdown('<div class="title-gradient">DP-SGD Epsilon Ablation</div>', unsafe_allow_html=True)
-    st.markdown("Real training runs of DP-TVAE at varying privacy budgets.")
+    st.markdown("Historical DP-TVAE training experiments at varying accountant budgets.")
+    st.warning("Opacus accounts for model training, not the private-data quantile preprocessing/inverse transform used here. These experiments do not establish end-to-end differential privacy; epsilon=infinity is non-private.")
 
     if ablation_data and len(ablation_data) > 0:
         df_a = pd.DataFrame(ablation_data)
@@ -588,7 +595,7 @@ elif page == "🔒 DP-SGD Ablation":
 # ============================================================================
 elif page == "🧬 Live Generator":
     st.markdown('<div class="title-gradient">Live Synthetic Generation</div>', unsafe_allow_html=True)
-    st.markdown("Generate new synthetic healthcare data using our **trained generative models** in real time.")
+    st.markdown("Sample cached model outputs, or run TVAE/CTGAN inference when local weights are installed. Generated rows are research artifacts, not clinically validated patient records.")
     st.write("")
 
     gen_tab1, gen_tab2 = st.tabs(["⚙️ Manual Configuration", "🗣️ Prompt-to-Patient (AI)"])
@@ -629,13 +636,13 @@ elif page == "🧬 Live Generator":
                     if method == "live_inference":
                         st.success(f"Generated **{len(synth_df)}** patients via live **{MODEL_LABELS[model_type]}** model inference.")
                     else:
-                        st.success(f"Generated **{len(synth_df)}** patients from **{MODEL_LABELS[model_type]}** model.")
+                        st.info(f"Sampled **{len(synth_df)}** rows from cached **{MODEL_LABELS[model_type]}** output; no model inference was run.")
 
                     c1, c2, c3 = st.columns(3)
                     with c1: st.metric("Patients", f"{len(synth_df):,}")
                     with c2: st.metric("Features", f"{len(synth_df.columns)}")
                     with c3:
-                        gen_method = "Live Inference" if method == "live_inference" else "Diffusion Sampling"
+                        gen_method = "Live Inference" if method == "live_inference" else "Cached model output"
                         st.metric("Method", gen_method)
 
                     st.dataframe(synth_df, use_container_width=True, height=400)
@@ -713,25 +720,11 @@ elif page == "🧬 Live Generator":
 
                     def _apply_filters(df, cons):
                         """Apply constraint filters and return matching rows."""
-                        m = pd.Series([True] * len(df), index=df.index)
-                        gv = cons.get("gender")
-                        if gv is not None:
-                            for gc in ["Sex", "male", "gender"]:
-                                if gc in df.columns:
-                                    tgt = ("M" if gv == 1 else "F") if gc == "gender" else gv
-                                    m = m & (df[gc] == tgt)
-                                    break
-                        for ac in ["Age", "age"]:
-                            if ac in df.columns:
-                                if cons.get("age_min") is not None:
-                                    m = m & (df[ac] >= cons["age_min"])
-                                if cons.get("age_max") is not None:
-                                    m = m & (df[ac] <= cons["age_max"])
-                                break
-                        for _, col, fn in cons.get("condition_filters", []):
-                            if col in df.columns:
-                                m = m & df[col].apply(fn)
-                        return df[m]
+                        try:
+                            return prompt_parser.filter_cohort(df, cons)
+                        except ValueError as exc:
+                            st.error(str(exc))
+                            st.stop()
 
                     with st.spinner(f"🧬 Generating {num_needed} patients with {MODEL_LABELS[p2p_model]}..."):
                         collected = pd.DataFrame()
@@ -760,14 +753,14 @@ elif page == "🧬 Live Generator":
                         if method == "live_inference":
                             st.success(f"Generated **{len(result)}** matching patients via live **{MODEL_LABELS[p2p_model]}** inference.")
                         else:
-                            st.success(f"Generated **{len(result)}** matching patients from **{MODEL_LABELS[p2p_model]}** model.")
+                            st.info(f"Selected **{len(result)}** matching rows from cached **{MODEL_LABELS[p2p_model]}** output; no model inference was run.")
 
                         c1, c2, c3 = st.columns(3)
                         with c1: st.metric("Patients", f"{len(result):,}")
                         gc = next((c for c in ["Sex","male","gender"] if c in result.columns), None)
                         if gc:
-                            male_map = {"Sex": 1, "male": 1, "gender": "M"}
-                            m_pct = (result[gc] == male_map.get(gc, 1)).mean() * 100
+                            male_values = result[gc].astype(str).str.lower().isin(["m", "male", "1", "1.0"])
+                            m_pct = male_values.mean() * 100
                             with c2: st.metric("Male / Female", f"{m_pct:.0f}% / {100-m_pct:.0f}%")
                         ac = next((c for c in ["Age","age"] if c in result.columns), None)
                         if ac:

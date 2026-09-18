@@ -37,6 +37,19 @@ class TestPrivacyDCR:
         assert out["avg_dcr"] > 0
 
 
+def test_singleton_privacy_reference_is_supported():
+    report = _evaluate.evaluate_privacy_dcr(pd.DataFrame({"a": [1.0]}), pd.DataFrame({"a": [1.0]}))
+    assert report["exact_match_count"] == 1
+    assert report["reference_rows_evaluated"] == 1
+
+
+def test_diabetes_status_is_not_used_as_a_target_proxy():
+    frame = pd.DataFrame({"Age": [20, 40], "Diabetes_Status": ["No", "Yes"], "Diabetes_Target": [0, 2]})
+    real, synth = _evaluate.preprocess_for_ml(frame, frame.copy(), "Diabetes_Target")
+    assert "Diabetes_Status" not in real and "Diabetes_Status" not in synth
+    assert "Diabetes_Target" in real
+
+
 class TestKAnonymity:
     def test_k_min_counts_smallest_group(self):
         df = pd.DataFrame(

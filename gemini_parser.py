@@ -91,17 +91,12 @@ def parse_prompt(prompt):
         ValueError  — if the API key is missing or the prompt is empty.
         RuntimeError — if the API call fails or the response is unparseable.
     """
-    api_key = get_api_key()
-    if not api_key:
-        raise ValueError(
-            "Groq API key not found. "
-            "Please create a .env file in the project root with:\n"
-            "GROQ_API_KEY=your_key_here"
-        )
-
     prompt = (prompt or "").strip()
     if not prompt:
         raise ValueError("Prompt is empty. Please describe the patients you'd like to generate.")
+    api_key = get_api_key()
+    if not api_key:
+        return fallback_parse(prompt), True
 
     payload = {
         "model": _GROQ_MODEL,
@@ -163,10 +158,12 @@ def _extract_json(text):
 def fallback_parse(prompt):
     """Offline regex-based fallback if Gemini API fails."""
     prompt_lower = prompt.lower()
+    if re.search(r'\b(?:without|no|not)\s+(?:\w+\s+)?(?:diabetes|hypertension|hypothyroidism|asthma|obesity)\b', prompt_lower):
+        raise ValueError("Offline parser does not support negated conditions; use manual configuration")
     result = {}
     
     # Num patients
-    num_match = re.search(r'\b(\d+)\b', prompt)
+    num_match = re.search(r'\b(\d+)\s+(?:(?:male|female)\s+)?(?:patients|people|records|men|women)\b', prompt_lower)
     if num_match:
         result["num_patients"] = int(num_match.group(1))
         

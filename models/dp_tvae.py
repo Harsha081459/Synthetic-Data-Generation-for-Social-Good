@@ -132,6 +132,7 @@ def main():
     torch.manual_seed(args.seed)
     
     logger.info(f"--- DP-TVAE Training (Epsilon: {args.epsilon}) ---")
+    logger.warning("Experimental training accountant only: private quantile preprocessing and inverse transforms are not privacy-accounted. Outputs have no established end-to-end DP guarantee.")
     
     # 1. Load Data
     df = pd.read_csv(args.input)

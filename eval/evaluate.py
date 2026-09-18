@@ -62,7 +62,8 @@ def parse_args():
 # ============================================================================
 def preprocess_for_ml(df_real, df_synth, target_col):
     """Align columns, drop NaNs, encode categoricals."""
-    common_cols = [c for c in df_real.columns if c in df_synth.columns]
+    aliases = {"Diabetes_Status"} if target_col == "Diabetes_Target" else set()
+    common_cols = [c for c in df_real.columns if c in df_synth.columns and c not in aliases]
     df_r = df_real[common_cols].copy()
     df_s = df_synth[common_cols].copy()
 
@@ -140,7 +141,7 @@ def evaluate_privacy_dcr(df_real, df_synth, sample_size=2000):
     s = df_synth.sample(min(len(df_synth), sample_size), random_state=42)
 
     mean = r.mean()
-    std = r.std().replace(0, 1)
+    std = r.std().replace(0, 1).fillna(1)
     r_norm = (r - mean) / std
     s_norm = (s - mean) / std
 
@@ -161,6 +162,8 @@ def evaluate_privacy_dcr(df_real, df_synth, sample_size=2000):
         "avg_dcr": round(avg_dcr, 4),
         "median_dcr": round(median_dcr, 4),
         "min_dcr": round(min_dcr, 4),
+        "reference_rows_evaluated": len(r),
+        "synthetic_rows_evaluated": len(s),
         "exact_match_count": exact_matches,
         "exact_match_percent": round(pct_exact, 2),
     }
@@ -223,7 +226,7 @@ def evaluate_reidentification_risk(df_real, df_synth, sample_size=2000):
     s = df_synth.sample(min(len(df_synth), sample_size), random_state=42)
 
     mean = r.mean()
-    std = r.std().replace(0, 1)
+    std = r.std().replace(0, 1).fillna(1)
     r_norm = (r - mean) / std
     s_norm = (s - mean) / std
 

@@ -151,3 +151,52 @@ def format_constraints_summary(constraints):
         lines.append("**Severity:** {}".format(constraints["severity"].capitalize()))
 
     return "\n\n".join(lines)
+
+
+def filter_cohort(df, constraints):
+    import pandas as pd
+
+    mask = pd.Series(True, index=df.index)
+
+    def column_for(names):
+        column = next((name for name in names if name in df.columns), None)
+        if column is None:
+            raise ValueError(f"Requested constraint is unavailable in this dataset: {names[0]}")
+        return column
+
+    gender = constraints.get("gender")
+    if gender is not None:
+        column = column_for(["Sex", "male", "gender"])
+        values = df[column].astype(str).str.lower()
+        aliases = ["m", "male", "1", "1.0"] if gender == 1 else ["f", "female", "0", "0.0"]
+        mask &= values.isin(aliases)
+
+    low, high = constraints.get("age_min"), constraints.get("age_max")
+    if low is not None and high is not None and low > high:
+        raise ValueError("Minimum age must not exceed maximum age")
+    if low is not None or high is not None:
+        column = column_for(["Age", "age"])
+        if low is not None:
+            mask &= df[column] >= low
+        if high is not None:
+            mask &= df[column] <= high
+
+    aliases = {
+        "diabetes": ["Diabetes_Target", "diabetes"],
+        "hypertension": ["Has_Hypertension", "prevalentHyp", "Cond_Essential_hypertension"],
+        "hypothyroidism": ["Has_Hypothyroidism"],
+    }
+    for condition in constraints.get("conditions", []):
+        if condition not in aliases:
+            raise ValueError(f"Unsupported condition: {condition}")
+        column = column_for(aliases[condition])
+        values = pd.to_numeric(df[column], errors="coerce").round()
+        mask &= values >= 1
+
+    severity = constraints.get("severity")
+    if severity:
+        if "diabetes" not in constraints.get("conditions", []) or severity not in SEVERITY_DIABETES:
+            raise ValueError("Severity filtering is supported only for the demo diabetes classes")
+        column = column_for(["Diabetes_Target"])
+        mask &= df[column].round() == SEVERITY_DIABETES[severity]
+    return df.loc[mask].copy()

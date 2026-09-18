@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![IEEE DataPort](https://img.shields.io/badge/IEEE_DataPort-Published-00629B?logo=ieee&logoColor=white)](https://ieee-dataport.org/documents/provably-private-synthetic-ehr-cohorts-latent-diffusion-tabsyn)
 
-> **IEEE DataPort Hackathon 2026** — Generating mathematically provable, privacy-preserving synthetic Electronic Health Records using state-of-the-art generative models including Latent Diffusion (TabSyn).
+> **IEEE DataPort Hackathon 2026** — A research prototype comparing synthetic healthcare-data generators, classifier utility and empirical privacy diagnostics. Includes an experimental Opacus DP-SGD training path; no end-to-end privacy or clinical-safety guarantee is established.
 
 ---
 
@@ -23,11 +23,13 @@
 
 Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIPAA, GDPR). Researchers cannot freely share or use real Electronic Health Records (EHR) for machine learning without risking re-identification of patients.
 
-**SynthoGen AI** solves this by generating **100% synthetic** patient cohorts that:
-- ✅ Preserve statistical distributions and clinical correlations
-- ✅ Achieve **zero privacy breaches** (0 exact matches across all models)
-- ✅ Maintain up to **94.59% ML utility** (TSTR accuracy) on Diabetes, **84.79%** on Framingham
-- ✅ Withstand formal privacy audits (DCR, K-Anonymity, Re-Identification Risk)
+**SynthoGen AI** explores this problem through four model families, a comparison dashboard and a cohort-sampling demo:
+- Compare distributions and classifier performance using saved evaluation artifacts.
+- Inspect sampled near-duplicate counts and distance-based privacy heuristics.
+- Run the dashboard from committed outputs without model weights or API credentials.
+- Train TVAE, CTGAN, TabDDPM and TabSyn separately; their standard training runs are not DP-SGD runs.
+
+The saved reports contain up to **94.59% classifier accuracy**, not 94.59% retained utility. Generator-level train/test separation is not documented, so these historical numbers must not be presented as an independently validated, leakage-free benchmark.
 
 ---
 
@@ -82,14 +84,14 @@ Healthcare AI is critically bottlenecked by **patient privacy regulations** (HIP
 
 ### Privacy Metrics (Averaged Across All Datasets)
 
-| Model | Avg DCR ↑ | K-Anonymity ↑ | Re-ID Risk ↓ | Privacy Breaches |
+| Model | Avg DCR ↑ | Mean group size ↑ | Distance-risk score ↓ | Sampled near-duplicates |
 |-------|:---------:|:-------------:|:------------:|:----------------:|
 | **TabSyn** | 7.11 | 61.2 | 0.218 | **0** |
 | **TabDDPM** | 7.99 | 176.7 | 0.224 | **0** |
 | **CTGAN** | 3.98 | 59.6 | 0.233 | **0** |
 | **TVAE** | 2.41 | 60.4 | 0.336 | **0** |
 
-> **Zero privacy breaches** across all 4 models and all 3 datasets. TabSyn and TabDDPM achieve the strongest privacy guarantees (highest DCR, lowest Re-ID risk) while maintaining competitive ML utility.
+> These historical reports found zero near-duplicates in sampled comparisons (at most 2,000 reference and synthetic rows). That is **not** zero privacy breaches. Mean group size is not minimum k-anonymity, and the distance-risk score is not a calibrated re-identification probability.
 
 ---
 
@@ -170,8 +172,10 @@ streamlit run app.py
 > `saved_models/*.pkl` (TVAE/CTGAN weights for true live re-inference) are
 > **not committed** — when absent the app transparently falls back to the
 > cached pools. Retrain them with `models/train_tvae.py` / `models/train_ctgan.py`.
-> The Prompt-to-Patient tab needs `GROQ_API_KEY`; without it the app shows an
-> error for that feature only — everything else still works.
+> Prompt-to-Patient works offline with the regex parser when `GROQ_API_KEY`
+> is absent. Supplying a key enables an external Groq call containing the prompt;
+> do not enter confidential patient information. Unsupported dataset conditions
+> are rejected rather than silently ignored.
 
 ### Tests
 
@@ -180,8 +184,11 @@ pip install -r requirements-dev.txt
 pytest -q
 ```
 
-The suite covers the prompt parsers and the core `eval/evaluate.py` metric
-functions on toy data — no datasets, weights, or network required.
+The suite covers prompt parsers, constraint enforcement, metric functions and Streamlit interaction tests. Dashboard tests use the committed datasets to navigate all six pages for all three datasets, sample all four model pools and generate a constrained cohort offline. No model checkpoints, credentials or external API calls are required.
+
+For a small local demo install `requirements-demo.txt` instead of the training stack, then run `streamlit run app.py`. Select Live Generator, choose a model and generate 10 rows; Method must say `Cached model output` when checkpoints are absent. Try `Generate 5 female patients over age 30 with diabetes` in Prompt-to-Patient. The regex fallback handles simple positive constraints, not unrestricted clinical language.
+
+The committed processed datasets total **13,285 rows** (8,047 + 4,240 + 998). The older 258K-scale claim is not supported by these files. Outputs can contain implausible clinical values; do not use this demo for clinical decisions. `patient_generator.py` is a separate legacy real-row perturbation helper, not a privacy-preserving release mechanism.
 
 ### Environment Variables (Optional — for Prompt-to-Patient feature)
 
@@ -197,7 +204,7 @@ XAI_API_KEY=your_xai_api_key_here
 
 | Dataset | Source | Records | Target Variable | Domain |
 |---------|--------|:-------:|-----------------|--------|
-| **Diabetes MCDD** | CDC BRFSS | 253,680 | Diabetes Status (3-class) | Metabolic Disease |
+| **Diabetes MCDD** | MCDD-derived processed artifact; original source/provenance needs confirmation | 8,047 committed rows | Diabetes Status (3-class) | Metabolic Disease |
 | **Framingham Heart** | NHLBI | 4,240 | 10-Year CHD Risk (binary) | Cardiovascular |
 | **Synthea EHR** | Synthea™ | 998 | Hypertension (binary) | General Practice |
 
@@ -205,21 +212,19 @@ All synthetic datasets are published on **[IEEE DataPort](https://ieee-dataport.
 
 ---
 
-## 🔒 Privacy Guarantees
+## Privacy diagnostics and scope
 
-Our evaluation pipeline rigorously tests every synthetic dataset for:
-
-1. **Distance to Closest Record (DCR):** Measures minimum distance between synthetic and real records — higher is safer
-2. **K-Anonymity:** Ensures each synthetic record has sufficient real-record "cover"
-3. **Re-Identification Risk:** Simulates attacker scenarios to quantify re-identification probability
-4. **Exact Match Detection:** Scans for verbatim copies — **0 breaches across all models**
-5. **DP-SGD Ablation:** Formal differential privacy (ε = 1.0 to ∞) with privacy-utility tradeoff analysis
+1. **DCR:** nearest-neighbour distance after numeric scaling, on sampled rows.
+2. **Grouped quasi-identifiers:** minimum/mean group sizes after binning; this does not prove anonymisation of original records.
+3. **Distance-risk heuristic:** `eval_comprehensive.py` uses `1/(1+DCR)`; `evaluate.py` uses `exp(-DCR)`. Their scores are not interchangeable and neither measures actual attack probability.
+4. **Near-duplicate count:** distances below `1e-6` in the evaluated subset; not an exhaustive privacy-breach assessment.
+5. **DP-SGD experiment:** Opacus accounts for training gradients. `models/dp_tvae.py` fits a quantile transformer and categorical encoders on private data, then uses that transformer to generate outputs without accounting for its privacy loss. This prevents an end-to-end DP claim. Infinite epsilon is explicitly non-private.
 
 ---
 
 ## 🧪 Evaluation Methodology
 
-- **TSTR (Train on Synthetic, Test on Real):** LightGBM classifiers trained on synthetic data, evaluated on held-out real data (`eval/evaluate.py`)
+- **TSTR:** LightGBM trained on synthetic data, scored on a classifier-level real-data split. The generator scripts train on their whole input CSV; generator-level holdout provenance is missing. The dashboard's `_full.json` schema comes from `eval/eval_comprehensive.py`, not the alternate `evaluate.py`.
 - **Correlation Matrix MAE:** Measures how well inter-feature correlations are preserved
 - **Distribution Fidelity:** KDE-based comparison of marginal distributions
 - **Bias & Fairness Audit:** Demographic parity analysis across protected attributes
@@ -231,9 +236,8 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
 - **Privacy metrics are empirical audits, not proofs.** DCR, k-anonymity, and
   re-identification risk in `eval/evaluate.py` measure distance/coverage on the
   evaluated samples — "0 privacy breaches" means zero synthetic rows within
-  1e-6 of a real row, not a guarantee against memorization. Only the DP-SGD
-  ablation (`models/dp_tvae.py`, Opacus `PrivacyEngine`, ε = 1.0–∞) provides
-  formal differential privacy.
+  1e-6 of a sampled reference row, not a guarantee against memorization. The
+  DP-SGD ablation accounts only for training, not its private preprocessing.
 - **TSTR uses a single classifier family.** Utility is measured with
   LightGBM only (`eval/evaluate.py`); results may differ for other model
   families.
@@ -241,7 +245,7 @@ Our evaluation pipeline rigorously tests every synthetic dataset for:
   is not the same as evaluating against real EHR, and its evaluation subset is
   small (998 records — see Datasets table).
 - **Dashboard "live generation" is model-dependent.** TabDDPM/TabSyn sample
-  from committed model-output pools plus small Gaussian micro-noise
+  from committed model-output pools without adding noise by default
   (`app.py` `generate_with_model`); only TVAE/CTGAN run true inference, and
   only when `saved_models/*.pkl` exist (not committed).
 
